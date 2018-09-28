@@ -1,0 +1,34 @@
+user input = homelink
+run bs to get all data from homelink
+give them features you found and ask them if they liked something in perticular
+user input = homelink
+
+get bedroom and bathroom count
+get sqft
+get HOA
+get schools
+get price range
+
+search in the price range of +-5% or till you get 2 listings
+if beds are 4 or more, search from -1 bed
+if baths are 2.5 or more, search from -0.5 baths
+search in the sqft from -5% or till you get at least 2 listings
+if no HOA search no HOA first, display with the lowest
+hometype match
+features match
+
+
+
+
+
+
+https://www.zillow.com
+/homes
+/for_sale
+/Fremont-CA-94538
+/fsba,new,cmsn_lt
+/house,condo,apartment_duplex,townhouse_type
+/97745_rid
+/1-_beds
+/globalrelevanceex_sort
+/0_mmm/
