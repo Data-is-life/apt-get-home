@@ -9,26 +9,37 @@ get HOA
 get schools
 get price range
 
-search in the price range of +-5% or till you get 2 listings
-if beds are 4 or more, search from -1 bed
-if baths are 2.5 or more, search from -0.5 baths
-search in the sqft from -5% or till you get at least 2 listings
 if no HOA search no HOA first, display with the lowest
 hometype match
 features match
 
 
+1. User enters address or redfin link
+2. Display prop info
+3. Ask user to select the most important features
+4. Give them 2 homes that match the other home and is active
 
 
 
 
-https://www.zillow.com
-/homes
-/for_sale
-/Fremont-CA-94538
-/fsba,new,cmsn_lt
-/house,condo,apartment_duplex,townhouse_type
-/97745_rid
-/1-_beds
-/globalrelevanceex_sort
-/0_mmm/
+1. If user enters redfin link:
+	1. get all features from the property
+	2. download all properties that are active in the city with the following criteria:
+		1. max price range +5%, min price search -20%
+		2. if beds >=4, min beds = beds-1
+		3. if baths >=2.5, min beds = baths-0.5
+		4. if baths >=4, min baths = baths -1
+		5. min sqft search -10%
+		6. min lot size -20%
+		7. Same type
+	3. scrub the properties:
+		1. if no HOA, only no HOA
+		2. if HOA, both
+	4. get features
+		1. match as many as you can
+
+1. Cost benefit for features to recommend
+2. Have two weighting schemes:
+	1. count all features as same
+	2. Use own expertise
+3. Evaluate via A/B testing on people I know
