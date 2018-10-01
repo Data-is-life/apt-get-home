@@ -78,6 +78,8 @@ def links_for_props(proxies, url_list, main_df, ua):
     while i < len(url_list):
         url = url_list[i]
         try:
+            b = random.uniform(2,4)
+            time.sleep(b)
             start_time = time.time()
             print(len(url_list))
             print(url)
@@ -88,11 +90,14 @@ def links_for_props(proxies, url_list, main_df, ua):
             if data['full_address'] != eds['full_address']:
                 main_df = pd.concat([main_df, df])
                 url_list.pop(i)
-                print(time.time() - start_time)
-                print(f'Est time remaining: {(time.time() - start_time)*len(url_list)} seconds')
+                a = (time.time() - start_time)*len(url_list)
+                print(a/len(url_list))
+                print(f'Est time remaining: {a} Seconds')
+                print(f'Est time remaining: {a/60} Minutes')
+                print(f'Est time remaining: {a/3600} Hours')
             else:
                 print('Captcha')
-                i+=1
+                i+=50
         except:
             print("Skipping. Connnection error")
             proxies.remove(proxy)
