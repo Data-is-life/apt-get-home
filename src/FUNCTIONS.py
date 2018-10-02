@@ -24,6 +24,7 @@ def proxie_check(proxies):
     default_list = []
     url = 'https://httpbin.org/ip'
     for i in range(0, len(proxies)):
+        time.sleep(random.uniform(0.5,1.5))
         proxy = proxies[i]
         print(i+1)
         start_time = time.time()
@@ -36,8 +37,9 @@ def proxie_check(proxies):
             print("Skipping. Connnection error")
             default_list.append(i+1)
             print(time.time() - start_time)
+            proxies.remove(proxy)
         print(default_list)
-    return default_list
+    return proxies
 
 
 def strip_count(lst):
