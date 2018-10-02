@@ -8,4 +8,4 @@ proxies_list_ = ['12.2.202.242:8080', '140.227.60.114:3128', '37.224.84.90:8080'
                 '50.246.214.132:34827', '100.40.4.230:59809', '104.165.219.163:46101', 
                 '173.88.208.145:41111']
                 
-proxie_random_pool = random.sample(proxies_list, len(proxies_list))
+proxie_random_pool = random.sample(proxies_list_, len(proxies_list_))
