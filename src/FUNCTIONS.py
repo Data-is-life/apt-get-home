@@ -102,7 +102,7 @@ def gen_url_list(zip_list):
             sold_url_list.append(url_ssdul)
 
             url_actaul = 'https://www.redfin.com/zipcode/' + str(num) + \
-                'filter/sort=lo-price,property-type=condo+townhouse'
+                '/filter/sort=lo-price,property-type=condo+townhouse'
             active_url_list.append(url_actaul)
 
             url_actdul = 'https://www.redfin.com/zipcode/' + str(num) + \
@@ -135,7 +135,7 @@ def gen_url_list(zip_list):
             sold_url_list.append(url_ssdul)
 
             url_actaul = 'https://www.redfin.com/zipcode/0' + str(num) + \
-                'filter/sort=lo-price,property-type=condo+townhouse'
+                '/filter/sort=lo-price,property-type=condo+townhouse'
             active_url_list.append(url_actaul)
 
             url_actdul = 'https://www.redfin.com/zipcode/0' + str(num) + \

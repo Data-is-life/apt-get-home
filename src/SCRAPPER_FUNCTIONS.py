@@ -72,17 +72,18 @@ def each_page(proxy, ua, url):
 
 def links_for_props(proxies, url_list, main_df, ua):
     proxy = random.sample(proxies, 1)[0]
-    print(proxies.index(proxy))
-    print(proxy)
-    i = 0
+    # print(proxies.index(proxy))
+    print(f'proxy number: {proxy}')
+    i = randint(0,(len(url_list)//2))
+    print(f'starting from url number: {i}')
     while i < len(url_list):
         url = url_list[i]
         try:
-            b = random.uniform(2,4)
+            b = random.uniform(1,2)
             time.sleep(b)
             start_time = time.time()
-            print(len(url_list))
-            print(url)
+            print(f'total left: {len(url_list)}')
+            # print(url)
             
             data = each_page(proxy, ua, url)
             df = pd.DataFrame(data)
@@ -91,17 +92,22 @@ def links_for_props(proxies, url_list, main_df, ua):
                 main_df = pd.concat([main_df, df])
                 url_list.pop(i)
                 a = (time.time() - start_time)*len(url_list)
-                print(a/len(url_list))
-                print(f'Est time remaining: {a} Seconds')
-                print(f'Est time remaining: {a/60} Minutes')
-                print(f'Est time remaining: {a/3600} Hours')
+                print('SUCCESS!!')
+                print(f'Currently on url number: {i}')
+                print(f'time taken: {a/len(url_list)}')
+                if i>0:
+                    i-=randint(0,1)
+                else:
+                    i+=0
             else:
-                print('Captcha')
-                i+=50
+                print('No results')
+                print(f'Currently on url number: {i}')
+                i+=randint(2,7)
         except:
             print("Skipping. Connnection error")
             proxies.remove(proxy)
-            print(len(proxies))
+            print(f'proxies left: {len(proxies)}')
+            print(f'total left: {len(url_list)}')
 
             return url_list, main_df, proxies
 
