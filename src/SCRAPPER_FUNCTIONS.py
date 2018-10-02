@@ -102,7 +102,7 @@ def links_for_props(proxies, url_list, main_df, ua):
             else:
                 print('No results')
                 print(f'Currently on url number: {i}')
-                i+=randint(2,7)
+                i+=randint(1,5)
         except:
             print("Skipping. Connnection error")
             proxies.remove(proxy)
