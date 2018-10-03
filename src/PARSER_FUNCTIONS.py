@@ -2,28 +2,10 @@
 # Github: Data-is-Life
 # Date: 10/01/2018
 
-import time
-import re
-import ast
-import sys
-import urllib
-import time
-import random
+import re, ast, sys, random, string
 import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError, URLError
-import requests
-import string
-from header_list import user_agent_list
-from SCRAPPER_FUNCTIONS import session_creator
-
-# ua = user_agent_list
-# proxies = proxies_list_
-# prx_pool = proxie_random_pool
-
-# soup = session_creator(proxy, ua, url)
 
 
 def address_parser(soup):
@@ -59,10 +41,8 @@ def address_parser(soup):
     else:
         home_dict['mls_num'] = 'N/A'
 
-	
-
-
     return pd.DataFrame(home_dict, index=[1])
+
 
 
 def top_info_parser(soup):
@@ -149,6 +129,7 @@ def public_info_parser(soup):
     return pd.DataFrame(public_info_dict, index=[1])
 
 
+
 def school_parser(soup):
     school_dict = dict()
     school_info = soup.findAll('div', {'class': "name-and-info"})
@@ -226,6 +207,7 @@ def school_parser(soup):
     return pd.DataFrame(school_dict, index=[1])
 
 
+
 def feats_parser(soup):
 
     all_home_feats = soup.findAll('span', {'class': "entryItemContent"})
@@ -252,6 +234,30 @@ def feats_parser(soup):
     df = pd.DataFrame(dict(zip(feat_cats, feat_vals)), index=[1])
 
     return df
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # def gen_sold_prop_info(url, hdr, proxy):

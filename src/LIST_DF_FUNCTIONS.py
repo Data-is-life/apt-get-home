@@ -2,44 +2,8 @@
 ## Github: Data-is-Life
 ## Date: 09/27/2018
 
-from math import ceil
-import time
-import re
-import ast
-import sys
-import urllib
-import time
-import random
+import re, sys, random, string
 import pandas as pd
-from bs4 import BeautifulSoup
-from random import randint
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError
-from urllib.error import URLError
-import requests
-from itertools import cycle
-import string
-
-def proxie_check(proxies):
-    default_list = []
-    url = 'https://httpbin.org/ip'
-    for i in range(0, len(proxies)):
-        time.sleep(random.uniform(0.5,1.5))
-        proxy = proxies[i]
-        print(i+1)
-        start_time = time.time()
-        try:
-            response = requests.get(
-                url, proxies={"http": proxy, "https": proxy})
-            print(response.json())
-            print(time.time() - start_time)
-        except:
-            print("Skipping. Connnection error")
-            default_list.append(i+1)
-            print(time.time() - start_time)
-            proxies.remove(proxy)
-        print(default_list)
-    return proxies
 
 
 def strip_count(lst):
