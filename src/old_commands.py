@@ -150,7 +150,16 @@
 
 # rand_zip_sld = random.sample(zip_list, len(zip_list))
 # sold_prp_list = []
-# ezl = []
+# ezl = []# sld_under_url_list = sld_under_url_list[1:]
+# print(len(sld_under_url_list))
+# sld_under_url_list, s_main_df = links_for_props(
+#     proxies, sld_under_url_list, s_main_df, ua)
+# list_ = list(s_main_df.full_address.values)
+# set([num[-5:] for num in list_])
+# main_df.to_csv('../Data/main_df_ap.csv')
+# s_main_df.to_csv('../Data/s_main.csv')
+# s_main_df = pd.read_csv('../Data/s_main.csv')
+# main_df = pd.read_csv('../Data/main_df_ap.csv')
 
 # ap_prp_count_list, rand_zip_list, proxies = zip_prop_count(rand_zip_list_ap, proxies, ap_prp_count_list, ua)
 # sold_prp_list, rand_zip_sld, proxies, ezl = zip_prop_count(rand_zip_sld, proxies, sold_prp_list, ua, ezl)
@@ -162,3 +171,19 @@
 #     ' Homes<span class="summarySeparator ">•</span></div>]', '') for num in sold_prp_list]
 # sold_prp_list = [num.replace('20 of ', '') for num in sold_prp_list]
 
+
+#     prop_hist = soup.findAll(
+#         'div', {'id': 'propertyHistory-expandable-segment'})
+#     prop_history = [num.text for num in prop_hist]
+
+
+# sld_under_url_list = sld_under_url_list[1:]
+# print(len(sld_under_url_list))
+# sld_under_url_list, s_main_df = links_for_props(
+#     proxies, sld_under_url_list, s_main_df, ua)
+# list_ = list(s_main_df.full_address.values)
+# set([num[-5:] for num in list_])
+# main_df.to_csv('../Data/main_df_ap.csv')
+# s_main_df.to_csv('../Data/s_main.csv')
+# s_main_df = pd.read_csv('../Data/s_main.csv')
+# main_df = pd.read_csv('../Data/main_df_ap.csv')

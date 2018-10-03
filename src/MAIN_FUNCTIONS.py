@@ -1,20 +1,29 @@
-## Author: Mohit Gangwani
-## Github: Data-is-Life
-## Date: 10/01/2018
+# Author: Mohit Gangwani
+# Github: Data-is-Life
+# Date: 10/01/2018
 
-import time, re, ast, sys, urllib, time, random
+import time
+import re
+import ast
+import sys
+import urllib
+import time
+import random
 import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
-import requests, string
+import requests
+import string
 from header_list import user_agent_list
 from SCRAPPER_FUNCTIONS import session_creator
 
-ua = user_agent_list
+# ua = user_agent_list
+# proxies = proxies_list_
+# prx_pool = proxie_random_pool
 
-soup = session_creator(proxy, ua, url)
+# soup = session_creator(proxy, ua, url)
 
 
 def address_parser(soup):
@@ -25,7 +34,6 @@ def address_parser(soup):
     add_list = home_address_MLS.split(sep=' |')
     zip_code = re.search('\d+$', add_list[0])
     home_add = re.search('(.+?),', home_address_MLS)
-    print(home_add)
     home_city = re.search(',(.+?),', home_address_MLS)
     home_state = re.search('\s\b\w\w\b\s', add_list[0])
 #     .replace(home_add.group(1), '').replace(
@@ -37,14 +45,23 @@ def address_parser(soup):
     home_dict['zip_code'] = zip_code.group()
     home_dict['state'] = home_state
 
+    home_description = soup.find('p', {'class': 'font-b1'})
+    if home_description != None:
+        home_dict['description'] = home_description.span.text
+    else:
+    	home_dict['description'] = 'N/A'
+
     if len(add_list) >= 2:
         mls_num = re.search('\d+$', add_list[1])
-        
+
         if mls_num != None:
             home_dict['mls_num'] = mls_num.group()
     else:
         home_dict['mls_num'] = 'N/A'
-        
+
+	
+
+
     return pd.DataFrame(home_dict, index=[1])
 
 
@@ -69,26 +86,26 @@ def top_info_parser(soup):
         home_sqft = re.findall(size_regex, a)
         yr_blt = re.findall(yr_blt_regex, a)
         status = re.findall(status_regex, a)
-        
-        if num_beds!=None:
+
+        if num_beds != None:
             top_info_dict['num_beds'] = float(num_beds[0].replace(
                 'Bed', '').replace(' ', ''))
-            
-        if num_baths!=None:
+
+        if num_baths != None:
             top_info_dict['num_baths'] = float(num_baths[0].replace(
-            'Bath', '').replace(' ', ''))
-            
-        if home_sqft!=None:
+                'Bath', '').replace(' ', ''))
+
+        if home_sqft != None:
             top_info_dict['home_sqft'] = float(home_sqft[0].replace(
-            'Sq', '').replace(' ', '').replace(':', ''))
-            
-        if yr_blt!=None:
+                'Sq', '').replace(' ', '').replace(':', ''))
+
+        if yr_blt != None:
             top_info_dict['yr_blt'] = int(yr_blt[0].replace(
-            'Built', '').replace(' ', '').replace(':', ''))
-            
-        if status!=None:
+                'Built', '').replace(' ', '').replace(':', ''))
+
+        if status != None:
             top_info_dict['status'] = status[0].replace(
-            'Status', '').replace(' ', '').replace(':', '')
+                'Status', '').replace(' ', '').replace(':', '')
 
         price_list.extend(re.findall(price_regex, a))
 
@@ -113,20 +130,20 @@ def top_info_parser(soup):
 
 def public_info_parser(soup):
     all_info = soup.findAll('div', {'data-rf-test-id': 'publicRecords'})
-    
+
     label_list = []
     values_list = []
-    
+
     for num in all_info:
         cats = num.findAll('span', {'class': 'table-label'})
         for i in cats:
             label_list.append(i.text)
-            
+
     for num in all_info:
         vals = num.findAll('div', {'class': 'table-value'})
         for i in vals:
             values_list.append(i.text)
-            
+
     public_info_dict = dict(zip(label_list, values_list))
 
     return pd.DataFrame(public_info_dict, index=[1])
@@ -144,7 +161,7 @@ def school_parser(soup):
         school_dict['elem_school_grades'] = elementary_school[1]
         school_dict['elem_school_rating'] = re.findall(
             '(\d+)', elementary_school[2])[0]
-    
+
     elif len(schools) >= 2:
         es = schools[1]
         elementary_school = es.split(sep=' •')
@@ -152,7 +169,7 @@ def school_parser(soup):
         school_dict['elem_school_grades'] = elementary_school[1]
         school_dict['elem_school_rating'] = re.findall(
             '(\d+)', elementary_school[2])[0]
-    
+
     else:
         school_dict['elem_school_name'] = 'N/A'
         school_dict['elem_school_grades'] = 'N/A'
@@ -161,17 +178,17 @@ def school_parser(soup):
     if len(schools) >= 2:
         if ('Middle' or 'Junior') in schools[1]:
             ms = schools[1]
-            
+
             if 'public' in ms:
                 middle_school = ms.split(sep=' •')
                 school_dict['middle_school_name'] = middle_school[0][:-6]
                 school_dict['middle_school_grades'] = middle_school[1]
                 school_dict['middle_school_rating'] = re.findall(
                     '(\d+)', middle_school[2])[0]
-            
+
             elif len(schools) >= 3:
                 ms = schools[2]
-                
+
                 if ('Middle' or 'Junior') in ms:
                     middle_school = ms.split(sep=' •')
                     school_dict['middle_school_name'] = middle_school[0][:-6]
@@ -209,31 +226,36 @@ def school_parser(soup):
     return pd.DataFrame(school_dict, index=[1])
 
 
+def feats_parser(soup):
 
+    all_home_feats = soup.findAll('span', {'class': "entryItemContent"})
 
+    feat_cats = []
+    feat_vals = []
 
+    for num in all_home_feats:
+        feat_cats.append(num.contents[0])
+    for num in all_home_feats:
+        feat_vals.append(num.span)
 
+    cats_set = set(feat_cats)
+    vals_set = set(feat_vals)
+    redundant = cats_set & vals_set
 
+    for num in redundant:
+        feat_cats.remove(num)
+        feat_vals.remove(num)
 
+    feat_cats = [str(num) for num in feat_cats]
+    feat_vals = [str(num.text) for num in feat_vals]
 
+    df = pd.DataFrame(dict(zip(feat_cats, feat_vals)), index=[1])
 
-
-
-
-
-
-
-
-
-
-
-
-
+    return df
 
 
 # def gen_sold_prop_info(url, hdr, proxy):
 
-    
 
 #     price_regex = r'\$\S+\s+'
 #     bed_regex = r'\d+\S?\d?\d?Bed'
