@@ -113,7 +113,7 @@ def search_url_part_three_gen(price):
 
     return url
 
-def search_url_part_four_gen(sqft):
+def search_url_part_six_gen(sqft):
     if sqft <= 350:
         url = ',max-sqft=500'
     elif sqft <= 550:
@@ -121,43 +121,43 @@ def search_url_part_four_gen(sqft):
     elif sqft <= 650:
         url = ',min-sqft=500,max-sqft=750'
     elif sqft <= 850:
-        url = ',min-sqft=500,max-sqft=1000'
+        url = ',min-sqft=500,max-sqft=1k'
     elif sqft <= 950:
-        url = ',min-sqft=750,max-sqft=1000'
+        url = ',min-sqft=750,max-sqft=1k'
     elif sqft <= 1100:
-        url = ',min-sqft=750,max-sqft=1250'
+        url = ',min-sqft=750,max-sqft=1.25k'
     elif sqft <= 1300:
-        url = ',min-sqft=1000,max-sqft=1500'
+        url = ',min-sqft=1k,max-sqft=1.5k'
     elif sqft <= 1600:
-        url = ',min-sqft=1250,max-sqft=1750'
+        url = ',min-sqft=1.25k,max-sqft=1.75k'
     elif sqft <= 1800:
-        url = ',min-sqft=1500,max-sqft=2000'
+        url = ',min-sqft=1.5k,max-sqft=2k'
     elif sqft <= 2000:
-        url = ',min-sqft=1500,max-sqft=2250'
+        url = ',min-sqft=1.5k,max-sqft=2.25k'
     elif sqft <= 2200:
-        url = ',min-sqft=1750,max-sqft=2500'
+        url = ',min-sqft=1.75k,max-sqft=2.5k'
     elif sqft <= 2500:
-        url = ',min-sqft=2000,max-sqft=2750'
+        url = ',min-sqft=2k,max-sqft=2.75k'
     elif sqft <= 2750:
-        url = ',min-sqft=2250,max-sqft=3000'
+        url = ',min-sqft=2.25k,max-sqft=3k'
     elif sqft <= 3000:
-        url = ',min-sqft=2500,max-sqft=3500'
+        url = ',min-sqft=2.5k,max-sqft=3.5k'
     elif sqft <= 3500:
-        url = ',min-sqft=3000,max-sqft=4000'
+        url = ',min-sqft=3k,max-sqft=4k'
     elif sqft <= 4000:
-        url = ',min-sqft=3000,max-sqft=4500'
+        url = ',min-sqft=3k,max-sqft=4.5k'
     elif sqft <= 4500:
-        url = ',min-sqft=3500,max-sqft=5000'
+        url = ',min-sqft=3.5k,max-sqft=5k'
     elif sqft <= 5000:
-        url = ',min-sqft=4000,max-sqft=7500'
+        url = ',min-sqft=4k,max-sqft=7.5k'
     elif sqft <= 6000:
-        url = ',min-sqft=4500,max-sqft=7500'
+        url = ',min-sqft=4.5k,max-sqft=7.5k'
     elif sqft <= 6500:
-        url = ',min-sqft=5000,max-sqft=7500'
+        url = ',min-sqft=5k,max-sqft=7.5k'
     elif sqft <= 7500:
-        url = ',min-sqft=5000'
+        url = ',min-sqft=5k'
     else:
-        url = ',min-sqft=7500'
+        url = ',min-sqft=7.5k'
 
     return url
 

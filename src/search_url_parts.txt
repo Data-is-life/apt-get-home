@@ -1,0 +1,17 @@
+url_part_one = https://www.redfin.com/zipcode/95035/filter/
+
+url_part_two = property-type=house+condo+townhouse,
+
+url_part_three = min-price=500k,max-price=1.5M,
+
+url_part_four = min-beds=0,max-beds=6,
+
+url_part_five = min-baths=2,
+
+url_part_six = min-sqft=1.25k-sqft,max-sqft=3k-sqft,
+
+url_part_seven = min-year-built=1960,max-year-built=2016,
+
+url_part_eight = min-lot-size=4.5k-sqft,max-lot-size=1-acre,
+
+url_part_nine = hoa=400
