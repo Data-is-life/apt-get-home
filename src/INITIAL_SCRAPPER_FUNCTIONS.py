@@ -29,7 +29,7 @@ def proxie_check(proxies):
     default_list = []
     url = 'https://httpbin.org/ip'
 
-    for i in range(0, len(proxies)):
+    for i in range(0, len(proxies)-1):
 
         print(i+1)
         proxy = proxies[i]
