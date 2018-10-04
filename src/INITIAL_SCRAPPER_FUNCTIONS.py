@@ -39,6 +39,7 @@ def proxie_check(proxies):
 
         try:
 
+            time.sleep(random.uniform(1,2))
             response = requests.get(
                 url, proxies={"http": proxy, "https": proxy})
 
@@ -51,7 +52,6 @@ def proxie_check(proxies):
             print(time.time() - start_time)
 
             default_list.append(i+1)
-            proxies.remove(proxy)
 
         print(default_list)
 

@@ -66,20 +66,20 @@ def top_info_parser(soup):
         zip_code_ = num.findAll('span', {'class': 'postal-code'})
         home_dict['zip_code'] = [num.text for num in zip_code_][0]
 
-        
-        price_cats = []
-
         money_ = num.findAll('div', {'class': 'statsValue'})
-        price_vals = [num.text for num in money_]
-
+        home_vals = [num.text for num in money_]
 
         price_cat_1 = num.findAll('div', {'class': 'avmLabel'})
         price_cats = [num.text for num in price_cat_1]
 
         price_cat_2 = num.find('div', {'class': 'statsLabel'})
-        price_cats = [num.text for num in price_cat_1]
+        price_cats = [price_cats.extend(num.text) for num in price_cat_2]
 
-            home_dict['address'] = num.text
+        price_dict = dict(zip(price_cats, price_vals))
+
+        home_lat = 
+
+        home_dict['address'] = num.text
         home_dict['city'] = home_city.group(1)
         home_dict['zip_code'] = zip_code.group()
         home_dict['state'] = home_state
@@ -105,9 +105,6 @@ def top_info_parser(soup):
 
     # top_info_dict = dict()
     # price_list = []
-
-    
-    print (all_top)
 
     for num in all_top:
         a = num.text
@@ -255,7 +252,7 @@ def feats_parser(soup, i):
     for num in all_home_feats:
         feat_cats.append(num.contents[0])
     for num in all_home_feats:
-        feat_vals.append(num.span)
+        feat_vals.append(num.span.text)
 
     cats_set = set(feat_cats)
     vals_set = set(feat_vals)
