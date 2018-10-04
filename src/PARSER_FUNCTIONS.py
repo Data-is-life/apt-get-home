@@ -8,7 +8,8 @@ from bs4 import BeautifulSoup
 from random import randint
 
 
-def address_parser(soup):
+def address_parser(soup, i):
+
     home_dict = dict()
 
     home_address_MLS = soup.title.string
@@ -41,22 +42,72 @@ def address_parser(soup):
     else:
         home_dict['mls_num'] = 'N/A'
 
-    return pd.DataFrame(home_dict, index=[1])
+    return pd.DataFrame(home_dict, index=[i])
 
 
 
 def top_info_parser(soup):
-    price_regex = r'\$\S+\s+'
-    bed_regex = r'\d+\S?\d?\d?Bed'
-    bath_regex = r'\d+\S?\d?\d?Bath'
-    size_regex = r'\d+\S?\d?\d?\s?Sq'
-    yr_blt_regex = r'Built: \d+'
-    status_regex = r'Status: \w+'
-
-    top_info_dict = dict()
-    price_list = []
 
     all_top = soup.findAll('div', {'class': 'HomeInfo inline-block'})
+
+
+
+    for num in all_top:
+
+        address_ = num.findAll('span', {'class': 'street-address'})
+        home_dict['address'] = [num.text for num in address_][0]
+
+        city_ = num.findAll('span', {'class': 'locality'})
+        home_dict['city'] =  [num.text for num in city_][0]
+
+        state_ = num.findAll('span', {'class': 'region'})
+        home_dict['state'] = [num.text for num in state_][0]
+
+        zip_code_ = num.findAll('span', {'class': 'postal-code'})
+        home_dict['zip_code'] = [num.text for num in zip_code_][0]
+
+        
+        price_cats = []
+
+        money_ = num.findAll('div', {'class': 'statsValue'})
+        price_vals = [num.text for num in money_]
+
+
+        price_cat_1 = num.findAll('div', {'class': 'avmLabel'})
+        price_cats = [num.text for num in price_cat_1]
+
+        price_cat_2 = num.find('div', {'class': 'statsLabel'})
+        price_cats = [num.text for num in price_cat_1]
+
+            home_dict['address'] = num.text
+        home_dict['city'] = home_city.group(1)
+        home_dict['zip_code'] = zip_code.group()
+        home_dict['state'] = home_state
+        cats = num.findAll('span', {'class': 'table-label'})
+        for i in cats:
+            label_list.append(i.text)
+
+    for num in all_info:
+        vals = num.findAll('div', {'class': 'table-value'})
+        for i in vals:
+            values_list.append(i.text)
+
+    public_info_dict = dict(zip(label_list, values_list))
+
+    return pd.DataFrame(public_info_dict, index=[i])
+
+    # price_regex = r'\$\S+\s+'
+    # bed_regex = r'\d+\S?\d?\d?Bed'
+    # bath_regex = r'\d+\S?\d?\d?Bath'
+    # size_regex = r'\d+\S?\d?\d?\s?Sq'
+    # yr_blt_regex = r'Built: \d+'
+    # status_regex = r'Status: \w+'
+
+    # top_info_dict = dict()
+    # price_list = []
+
+    
+    print (all_top)
 
     for num in all_top:
         a = num.text
@@ -105,10 +156,10 @@ def top_info_parser(soup):
             top_info_dict['redfin_est'] = 'N/A'
             top_info_dict['sold_price'] = 'N/A'
 
-    return pd.DataFrame(top_info_dict, index=[1])
+    return pd.DataFrame(top_info_dict, index=[i])
 
 
-def public_info_parser(soup):
+def public_info_parser(soup, i):
     all_info = soup.findAll('div', {'data-rf-test-id': 'publicRecords'})
 
     label_list = []
@@ -126,11 +177,11 @@ def public_info_parser(soup):
 
     public_info_dict = dict(zip(label_list, values_list))
 
-    return pd.DataFrame(public_info_dict, index=[1])
+    return pd.DataFrame(public_info_dict, index=[i])
 
 
 
-def school_parser(soup):
+def school_parser(soup, i):
     school_dict = dict()
     school_info = soup.findAll('div', {'class': "name-and-info"})
     schools = [num.text for num in school_info]
@@ -143,72 +194,58 @@ def school_parser(soup):
         school_dict['elem_school_rating'] = re.findall(
             '(\d+)', elementary_school[2])[0]
 
-    elif len(schools) >= 2:
+    elif ((len(schools) >= 2 and 'public' in schools[1])):
         es = schools[1]
         elementary_school = es.split(sep=' •')
         school_dict['elem_school_name'] = elementary_school[0][:-6]
         school_dict['elem_school_grades'] = elementary_school[1]
         school_dict['elem_school_rating'] = re.findall(
             '(\d+)', elementary_school[2])[0]
-
     else:
         school_dict['elem_school_name'] = 'N/A'
         school_dict['elem_school_grades'] = 'N/A'
         school_dict['elem_school_rating'] = 'N/A'
 
-    if len(schools) >= 2:
-        if ('Middle' or 'Junior') in schools[1]:
-            ms = schools[1]
-
-            if 'public' in ms:
-                middle_school = ms.split(sep=' •')
-                school_dict['middle_school_name'] = middle_school[0][:-6]
-                school_dict['middle_school_grades'] = middle_school[1]
-                school_dict['middle_school_rating'] = re.findall(
-                    '(\d+)', middle_school[2])[0]
-
-            elif len(schools) >= 3:
-                ms = schools[2]
-
-                if ('Middle' or 'Junior') in ms:
-                    middle_school = ms.split(sep=' •')
-                    school_dict['middle_school_name'] = middle_school[0][:-6]
-                    school_dict['middle_school_grades'] = middle_school[1]
-                    school_dict['middle_school_rating'] = re.findall(
+    if ((len(schools) >= 2 and 'public' in schools[1]) and (
+        'Middle' or 'Junior') in schools[1]):
+        middle_school = ms.split(sep=' •')
+        school_dict['middle_school_name'] = middle_school[0][:-6]
+        school_dict['middle_school_grades'] = middle_school[1]
+        school_dict['middle_school_rating'] = re.findall(
+            '(\d+)', middle_school[2])[0]
+    elif ((len(schools) >= 3 and 'public' in schools[2]) and (
+        'Middle' or 'Junior') in schools[2]):
+        middle_school = ms.split(sep=' •')
+        school_dict['middle_school_name'] = middle_school[0][:-6]
+        school_dict['middle_school_grades'] = middle_school[1]
+        school_dict['middle_school_rating'] = re.findall(
                         '(\d+)', middle_school[2])[0]
     else:
         school_dict['middle_school_name'] = 'N/A'
         school_dict['middle_school_grades'] = 'N/A'
         school_dict['middle_school_rating'] = 'N/A'
 
-    if len(schools) >= 3:
-        if ('9 to 12') in schools[2]:
-            hs = schools[2]
-
-            if 'public' in hs:
-                high_school = hs.split(sep=' •')
-                school_dict['high_school_name'] = high_school[0][:-6]
-                school_dict['high_school_grades'] = high_school[1]
-                school_dict['high_school_rating'] = high_school[2]
-
-            elif len(schools) >= 4:
-                hs = schools[3]
-
-                if 'public' in hs:
-                    high_school = hs.split(sep=' •')
-                    school_dict['high_school_name'] = high_school[0][:-6]
-                    school_dict['high_school_grades'] = high_school[1]
-                    school_dict['high_school_rating'] = high_school[2]
+    if ((len(schools) >= 3 and ('9 to 12') in schools[2]) and 'public' in schools[2]):
+        high_school = hs.split(sep=' •')
+        school_dict['high_school_name'] = high_school[0][:-6]
+        school_dict['high_school_grades'] = high_school[1]
+        school_dict['high_school_rating'] = high_school[2]
+    elif ((len(schools) >= 4 and ('9 to 12') in schools[3]) and 'public' in schools[3]):
+        hs = schools[3]
+        high_school = hs.split(sep=' •')
+        school_dict['high_school_name'] = high_school[0][:-6]
+        school_dict['high_school_grades'] = high_school[1]
+        school_dict['high_school_rating'] = high_school[2]
     else:
         school_dict['high_school_name'] = 'N/A'
         school_dict['high_school_grades'] = 'N/A'
         school_dict['high_school_rating'] = 'N/A'
 
-    return pd.DataFrame(school_dict, index=[1])
+    return pd.DataFrame(school_dict, index=[i])
 
 
 
-def feats_parser(soup):
+def feats_parser(soup, i):
 
     all_home_feats = soup.findAll('span', {'class': "entryItemContent"})
 
@@ -231,7 +268,7 @@ def feats_parser(soup):
     feat_cats = [str(num) for num in feat_cats]
     feat_vals = [str(num.text) for num in feat_vals]
 
-    df = pd.DataFrame(dict(zip(feat_cats, feat_vals)), index=[1])
+    df = pd.DataFrame(dict(zip(feat_cats, feat_vals)), index=[i])
 
     return df
 
