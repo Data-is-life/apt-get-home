@@ -14,6 +14,17 @@ from SEARCH_URL_GEN import *
 ua = user_agent_list
 proxies = proxies_list_
 
+def rename_columns(strs_to_replace):
+    modified_list = []
+    for num in strs_to_replace:
+        modified_list.append(num.replace('Redfin Estimate', 'redfin_est').replace('Beds', 'num_bdrms').replace(
+            'Baths', 'num_bths').lower().replace('built: ', 'yr_blt').replace(':  ', '').replace(': ', '').replace(
+            '.', '').replace('  ', '').replace('sq ft', 'sq_ft').replace(' ', '_').replace('#_of', 'num').replace(
+            'year_built', 'yr_blt').replace('_(', '_').replace(')', '').replace(')', '').replace(',', '').replace(
+            'minimum', 'min').replace('maximum', 'max'))
+    return modified_list
+
+
 def info_from_property(soup):
 
     top_info_dict = top_info_parser(soup, 1)
@@ -27,14 +38,15 @@ def info_from_property(soup):
 
     df.columns = rename_columns(df.columns)
 
-    num_bdrms = {'num_bdrms': ['num_bdrms', 'num_bdrms2']}
-    num_bths = {'num_bths': ['num_bths2', 'num_bths']}
-    sq_ft = {'sqft': ['sqft2', 'sqft']}
-    yblt = {'yr_blt': ['yr_blt', 'yr_blt2']}
-    df = df.rename(columns=lambda c: num_bdrms[c].pop(0) if c in num_bdrms.keys() else c)
-    df = df.rename(columns=lambda c: num_bths[c].pop(0) if c in num_bths.keys() else c)
-    df = df.rename(columns=lambda c: sq_ft[c].pop(0) if c in sq_ft.keys() else c)
-    df = df.rename(columns=lambda c: yblt[c].pop(0) if c in yblt.keys() else c)
+    num_bdrms = {'num_bdrms': ['num_bdrs', 'num_bdrs2']}
+    num_bths = {'num_bths': ['num_bts2', 'num_bts']}
+    sq_ft = {'sq_ft': ['sq_ft2', 'sq_ft']}
+    yblt = {'yr_blt': ['yr_bt2', 'yr_bt']}
+
+    df = df.rename(columns=lambda x: num_bdrms[x].pop(0) if x in num_bdrms.keys() else x)
+    df = df.rename(columns=lambda x: num_bths[x].pop(0) if x in num_bths.keys() else x)
+    df = df.rename(columns=lambda x: sq_ft[x].pop(0) if x in sq_ft.keys() else x)
+    df = df.rename(columns=lambda x: yblt[x].pop(0) if x in yblt.keys() else x)
 
     return df
 
@@ -46,7 +58,7 @@ def gen_url(customer_df):
     price = float(customer_df['price'].values)
     num_bds = int(customer_df['num_bds'].values)
     num_bths = float(customer_df['num_bths'].values)
-    sqft = int(customer_df['sqft'].values)
+    sqft = int(customer_df['sq_ft'].values)
     yr_blt = int(customer_df['yr_blt'].values)
     lot_sqft = int(customer_df['lot_sf'].values)
     hoa = customer_df['HOA'].values

@@ -216,17 +216,3 @@ def feats_parser(soup, _count):
     df = pd.DataFrame(dict(zip(feat_cats, feat_vals)), index=[_count])
 
     return df
-
-
-def rename_columns(strs_to_replace):
-    modified_list = []
-    for num in strs_to_replace:
-        modified_list.append(num.replace('Redfin Estimate', 'redfin_est').replace('Beds', 'num_bdrms').replace(
-            'Baths', 'num_bths').lower().replace('built: ', 'yr_blt').replace(':  ', '').replace(': ', '').replace(
-            '.', '').replace('  ', '').replace('sq ft', 'sqft').replace(' ', '_').replace('#_of', 'num').replace(
-            'year_built', 'yr_blt').replace('_(', '_').replace(')', '').replace(')', '').replace(',', '').replace(
-            'minimum', 'min').replace('maximum', 'max'))
-    return modified_list
-
-
-
