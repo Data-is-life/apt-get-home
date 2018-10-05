@@ -29,9 +29,9 @@ def proxie_check(proxies):
     default_list = []
     url = 'https://httpbin.org/ip'
 
-    for i in range(0, len(proxies)-1):
+    for i in range(0, len(proxies) - 1):
 
-        print(i+1)
+        print(i + 1)
         proxy = proxies[i]
 
         time.sleep(random.uniform(0.5, 1.5))
@@ -39,7 +39,7 @@ def proxie_check(proxies):
 
         try:
 
-            time.sleep(random.uniform(1,2))
+            time.sleep(random.uniform(1, 2))
             response = requests.get(
                 url, proxies={"http": proxy, "https": proxy})
 
@@ -51,7 +51,7 @@ def proxie_check(proxies):
             print("Skipping. Connnection error")
             print(time.time() - start_time)
 
-            default_list.append(i+1)
+            default_list.append(i + 1)
 
         print(default_list)
 
@@ -68,7 +68,7 @@ def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
     for num in zip_list:
 
         url = 'https://www.redfin.com/zipcode/' + \
-            str(num)+'/filter/property-type=house+condo+townhouse,' + \
+            str(num) + '/filter/property-type=house+condo+townhouse,' + \
             'include=sold-1yr,min-price=100k,min-baths=1,include=sold-1yr'
 
         try:
@@ -87,7 +87,7 @@ def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
                 ezl.append(num)
                 prp_list.append(all_count)
                 zip_list.remove(num)
-                print(len(zip_list)+len(prp_list))
+                print(len(zip_list) + len(prp_list))
 
             else:
                 print("Captcha!!!!!")
@@ -105,8 +105,8 @@ def each_page(proxy, ua, url):
     soup = session_creator(proxy, ua, url)
 
     start_time = time.time()
-    time.sleep(random.uniform(0, 1)*4)
-    print(time.time()-start_time)
+    time.sleep(random.uniform(0, 1) * 4)
+    print(time.time() - start_time)
 
     full_soup = soup.findAll('a', {'class': 'bottom link-override'})
 
@@ -125,7 +125,7 @@ def links_for_props(proxies, url_list, main_df, ua):
     proxy = random.sample(proxies, 1)[0]
     print(f'proxy number: {proxy}')
 
-    i = randint(0, (len(url_list)//2))
+    i = randint(0, (len(url_list) // 2))
     print(f'starting from url number: {i}')
 
     while i < len(url_list):
@@ -143,7 +143,7 @@ def links_for_props(proxies, url_list, main_df, ua):
             if data['full_address'] != eds['full_address']:
                 main_df = pd.concat([main_df, df])
                 url_list.pop(i)
-                a = (time.time() - start_time)*len(url_list)
+                a = (time.time() - start_time) * len(url_list)
                 print('SUCCESS!!')
                 print(f'Currently on url number: {i}')
                 print(f'time taken: {a/len(url_list)}')

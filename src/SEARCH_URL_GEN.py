@@ -2,9 +2,10 @@
 # Github: Data-is-Life
 # Date: 10/02/2018
 
+
 def search_url_part_two_gen(type_home):
 
-    if (type_home == 'Condo' or type_home == 'Townhouse,'):
+    if (type_home == 'Condo' or type_home == 'Townhouse'):
         url = 'property-type=condo+townhouse,'
     elif type_home == 'Single Family House,':
         url = 'property-type=House,'
@@ -12,6 +13,7 @@ def search_url_part_two_gen(type_home):
         url = ''
 
     return url
+
 
 def search_url_part_three_gen(price):
 
@@ -118,7 +120,6 @@ def search_url_part_three_gen(price):
     else:
         url = ''
 
-
     return url
 
 
@@ -136,7 +137,7 @@ def search_url_part_four_gen(num_bds):
         url = 'min-beds=3,max-beds=5,'
     elif num_bds <= 5:
         url = 'min-beds=4,'
-    elif num_bds <=10:
+    elif num_bds <= 10:
         url = 'min-beds=5'
     elif num_bds > 10:
         url = 'min-beds=6'
@@ -144,6 +145,7 @@ def search_url_part_four_gen(num_bds):
         url = ''
 
     return url
+
 
 def search_url_part_five_gen(num_bths):
 
@@ -218,6 +220,7 @@ def search_url_part_six_gen(sqft):
 
     return url
 
+
 def search_url_part_seven_gen(yr_blt):
 
     if yr_blt <= 1900:
@@ -268,7 +271,7 @@ def search_url_part_eight_gen(lot_sqft):
         url = 'min-lot-size=5-acre,max-lot-size=100-acre,'
     elif lot_sqft <= 100:
         url = 'min-lot-size=10-acre,'
-    elif lot_sqft >100:
+    elif lot_sqft > 100:
         url = 'min-lot-size=40-acre,'
     else:
         url = ''

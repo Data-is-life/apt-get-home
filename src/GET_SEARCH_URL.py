@@ -1,3 +1,34 @@
+import re, urllib, random, requests
+import pandas as pd
+from bs4 import BeautifulSoup
+from selenium.webdriver.firefox.webdriver import FirefoxProfile
+from urllib.request import urlopen, Request
+from urllib.error import HTTPError, URLError
+from header_list import user_agent_list
+from proxies_list import proxies_list_
+from INITIAL_SCRAPPER_FUNCTIONS import *
+from PARSER_FUNCTIONS import *
+from LIST_DF_FUNCTIONS import *
+from SEARCH_URL_GEN import *
+ua = user_agent_list
+proxies = proxies_list_
+
+def info_from_property(soup):
+
+    top_info_dict = top_info_parser(soup, 1)
+    public_info_dict = public_info_parser(soup, 1)
+    school_dict = school_parser(soup, 1)
+    all_home_feats = feats_parser(soup, 1)
+
+    df = pd.DataFrame()
+    df = pd.concat([top_info_dict, school_dict, public_info_dict,
+                    all_home_feats], axis=1)
+
+    df.columns = rename_columns(df.columns)
+
+    return df
+
+
 def gen_url(customer_df):
     zip_code = int(customer_df['zip'].values)
     city = str(customer_df['city'].values)

@@ -1,6 +1,6 @@
-## Author: Mohit Gangwani
-## Github: Data-is-Life
-## Date: 09/27/2018
+# Author: Mohit Gangwani
+# Github: Data-is-Life
+# Date: 09/27/2018
 
 import re, sys, random, string
 import pandas as pd
@@ -45,11 +45,12 @@ def strip_count(lst):
         data={'zip': zip_list, 'median_price': median_list, 'num_ap_homes': num_homes_list})
     return df
 
+
 def gen_url_list(zip_list):
     active_url_list = []
     sold_url_list = []
     for num in zip_list:
-        
+
         if num >= 10000:
             url_asaul = 'https://www.redfin.com/zipcode/' + str(num) + \
                 '/filter/sort=lo-price,property-type=house'
@@ -82,7 +83,7 @@ def gen_url_list(zip_list):
             url_sctdul = 'https://www.redfin.com/zipcode/' + str(num) + \
                 '/filter/sort=hi-price,property-type=condo+townhouse,include=sold-3mo'
             sold_url_list.append(url_sctdul)
-        
+
         else:
             url_asaul = 'https://www.redfin.com/zipcode/0' + str(num) + \
                 '/filter/sort=lo-price,property-type=house'
@@ -115,5 +116,5 @@ def gen_url_list(zip_list):
             url_sctdul = 'https://www.redfin.com/zipcode/0' + str(num) + \
                 '/filter/sort=hi-price,property-type=condo+townhouse,include=sold-3mo'
             sold_url_list.append(url_sctdul)
-    
+
     return active_url_list, sold_url_list
