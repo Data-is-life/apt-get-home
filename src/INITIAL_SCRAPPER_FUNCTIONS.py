@@ -104,9 +104,9 @@ def each_page(proxy, ua, url):
 
     soup = session_creator(proxy, ua, url)
 
-    start_time = time.time()
-    time.sleep(random.uniform(0, 1) * 4)
-    print(time.time() - start_time)
+    # start_time = time.time()
+    time.sleep(random.uniform(0, 1) * 3)
+    # print(time.time() - start_time)
 
     full_soup = soup.findAll('a', {'class': 'bottom link-override'})
 
@@ -134,8 +134,8 @@ def links_for_props(proxies, url_list, main_df, ua):
         try:
             b = random.uniform(0.75, 2.25)
             time.sleep(b)
-            start_time = time.time()
-            print(f'total left: {len(url_list)}')
+            # start_time = time.time()
+            # print(f'total left: {len(url_list)}')
 
             data = each_page(proxy, ua, url)
             df = pd.DataFrame(data)
@@ -143,23 +143,23 @@ def links_for_props(proxies, url_list, main_df, ua):
             if data['full_address'] != eds['full_address']:
                 main_df = pd.concat([main_df, df])
                 url_list.pop(i)
-                a = (time.time() - start_time) * len(url_list)
-                print('SUCCESS!!')
-                print(f'Currently on url number: {i}')
-                print(f'time taken: {a/len(url_list)}')
+                # a = (time.time() - start_time) * len(url_list)
+                # print('SUCCESS!!')
+                # print(f'Currently on url number: {i}')
+                # print(f'time taken: {a/len(url_list)}')
                 if i > 0:
                     i -= randint(0, 1)
                 else:
                     i += 0
             else:
-                print('No results')
-                print(f'Currently on url number: {i}')
+                # print('No results')
+                # print(f'Currently on url number: {i}')
                 i += randint(1, 5)
         except:
-            print("Skipping. Connnection error")
+            # print("Skipping. Connnection error")
             proxies.remove(proxy)
-            print(f'proxies left: {len(proxies)}')
-            print(f'total left: {len(url_list)}')
+            # print(f'proxies left: {len(proxies)}')
+            # print(f'total left: {len(url_list)}')
 
             return url_list, main_df, proxies
 

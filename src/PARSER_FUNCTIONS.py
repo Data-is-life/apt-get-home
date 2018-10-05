@@ -2,11 +2,7 @@
 # Github: Data-is-Life
 # Date: 10/01/2018
 
-import re
-import ast
-import sys
-import random
-import string
+import re, ast, sys, random, string
 import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
