@@ -145,7 +145,68 @@ def top_info_parser(soup):
 
     return pd.DataFrame(top_info_dict, index=[i])
     
-    
+
+def school_parser(soup, _count):
+    school_dict = dict()
+    school_info = soup.findAll('div', {'class': "name-and-info"})
+    schools = [num.text for num in school_info]
+
+    if ('Public') in schools[0]:
+        es = schools[0]
+        elementary_school = es.split(sep=' •')
+        school_dict['elem_school_name'] = elementary_school[0][:-6]
+        school_dict['elem_school_grades'] = elementary_school[1]
+        school_dict['elem_school_rating'] = re.findall(
+            '(\d+)', elementary_school[2])[0]
+
+    elif ((len(schools) >= 2 and 'public' in schools[1])):
+        es = schools[1]
+        elementary_school = es.split(sep=' •')
+        school_dict['elem_school_name'] = elementary_school[0][:-6]
+        school_dict['elem_school_grades'] = elementary_school[1]
+        school_dict['elem_school_rating'] = re.findall(
+            '(\d+)', elementary_school[2])[0]
+    else:
+        school_dict['elem_school_name'] = 'N/A'
+        school_dict['elem_school_grades'] = 'N/A'
+        school_dict['elem_school_rating'] = 'N/A'
+
+    if ((len(schools) >= 2 and 'public' in schools[1]) and (
+        'Middle' or 'Junior') in schools[1]):
+        middle_school = ms.split(sep=' •')
+        school_dict['middle_school_name'] = middle_school[0][:-6]
+        school_dict['middle_school_grades'] = middle_school[1]
+        school_dict['middle_school_rating'] = re.findall(
+            '(\d+)', middle_school[2])[0]
+    elif ((len(schools) >= 3 and 'public' in schools[2]) and (
+        'Middle' or 'Junior') in schools[2]):
+        middle_school = ms.split(sep=' •')
+        school_dict['middle_school_name'] = middle_school[0][:-6]
+        school_dict['middle_school_grades'] = middle_school[1]
+        school_dict['middle_school_rating'] = re.findall(
+                        '(\d+)', middle_school[2])[0]
+    else:
+        school_dict['middle_school_name'] = 'N/A'
+        school_dict['middle_school_grades'] = 'N/A'
+        school_dict['middle_school_rating'] = 'N/A'
+
+    if ((len(schools) >= 3 and ('9 to 12') in schools[2]) and 'public' in schools[2]):
+        high_school = hs.split(sep=' •')
+        school_dict['high_school_name'] = high_school[0][:-6]
+        school_dict['high_school_grades'] = high_school[1]
+        school_dict['high_school_rating'] = high_school[2]
+    elif ((len(schools) >= 4 and ('9 to 12') in schools[3]) and 'public' in schools[3]):
+        hs = schools[3]
+        high_school = hs.split(sep=' •')
+        school_dict['high_school_name'] = high_school[0][:-6]
+        school_dict['high_school_grades'] = high_school[1]
+        school_dict['high_school_rating'] = high_school[2]
+    else:
+        school_dict['high_school_name'] = 'N/A'
+        school_dict['high_school_grades'] = 'N/A'
+        school_dict['high_school_rating'] = 'N/A'
+
+    return pd.DataFrame(school_dict, index=[_count])
     
 # def gen_sold_prop_info(url, hdr, proxy):
 

@@ -1,5 +1,6 @@
 import re, urllib, random, requests
 import pandas as pd
+import numpy as np
 from bs4 import BeautifulSoup
 from selenium.webdriver.firefox.webdriver import FirefoxProfile
 from urllib.request import urlopen, Request
@@ -25,6 +26,15 @@ def info_from_property(soup):
                     all_home_feats], axis=1)
 
     df.columns = rename_columns(df.columns)
+
+    num_bdrms = {'num_bdrms': ['num_bdrms', 'num_bdrms2']}
+    num_bths = {'num_bths': ['num_bths2', 'num_bths']}
+    sq_ft = {'sqft': ['sqft2', 'sqft']}
+    yblt = {'yr_blt': ['yr_blt', 'yr_blt2']}
+    df = df.rename(columns=lambda c: num_bdrms[c].pop(0) if c in num_bdrms.keys() else c)
+    df = df.rename(columns=lambda c: num_bths[c].pop(0) if c in num_bths.keys() else c)
+    df = df.rename(columns=lambda c: sq_ft[c].pop(0) if c in sq_ft.keys() else c)
+    df = df.rename(columns=lambda c: yblt[c].pop(0) if c in yblt.keys() else c)
 
     return df
 

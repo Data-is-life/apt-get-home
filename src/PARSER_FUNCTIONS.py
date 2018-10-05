@@ -227,3 +227,6 @@ def rename_columns(strs_to_replace):
             'year_built', 'yr_blt').replace('_(', '_').replace(')', '').replace(')', '').replace(',', '').replace(
             'minimum', 'min').replace('maximum', 'max'))
     return modified_list
+
+
+
