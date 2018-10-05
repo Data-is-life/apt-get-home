@@ -11,6 +11,14 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
 
+def rename_columns(strs_to_replace):
+    modified_list = []
+    for num in strs_to_replace:
+        modified_list.append(num.replace('Redfin Estimate', 'redfin_est').replace('Beds', 'num_bdrs').replace(
+            'Baths', 'num_bts').lower().replace('built: ', 'yr_blt').replace(':  ', '').replace(': ', '').replace(
+            '.', '').replace('  ', '').replace('sqft', 'sq_ft').replace(' ', '_').replace('_(', '_').replace(
+            ')', '').replace(')', '').replace(',', '').replace('minimum', 'min').replace('maximum', 'max').replace('$', 'price'))
+    return modified_list
 
 def top_info_parser(soup, _count):
 
@@ -91,7 +99,11 @@ def top_info_parser(soup, _count):
     else:
         all_info_dict['description'] = 'N/A'
 
-    return pd.DataFrame(all_info_dict, index=[_count])
+    df = pd.DataFrame(all_info_dict, index=[_count])
+
+    df.columns = rename_columns(df.columns)
+
+    return df
 
 
 def public_info_parser(soup, _count):

@@ -1,3 +1,8 @@
+# Author: Mohit Gangwani
+# Github: Data-is-Life
+# Date: 10/03/2018
+
+
 import re, urllib, random, requests
 import pandas as pd
 import numpy as np
@@ -14,14 +19,12 @@ from SEARCH_URL_GEN import *
 ua = user_agent_list
 proxies = proxies_list_
 
-def rename_columns(strs_to_replace):
+def rename_columns_big(strs_to_replace):
     modified_list = []
     for num in strs_to_replace:
-        modified_list.append(num.replace('Redfin Estimate', 'redfin_est').replace('Beds', 'num_bdrms').replace(
-            'Baths', 'num_bths').lower().replace('built: ', 'yr_blt').replace(':  ', '').replace(': ', '').replace(
-            '.', '').replace('  ', '').replace('sq ft', 'sq_ft').replace(' ', '_').replace('#_of', 'num').replace(
-            'year_built', 'yr_blt').replace('_(', '_').replace(')', '').replace(')', '').replace(',', '').replace(
-            'minimum', 'min').replace('maximum', 'max'))
+        modified_list.append(num.lower().replace(':  ', '').replace(': ', '').replace('.', '').replace(
+            '  ', '').replace(' ', '_').replace('_(', '_').replace(')', '').replace(')', '').replace(
+            ',', '').replace('minimum', 'min').replace('maximum', 'max').replace('$', 'price'))
     return modified_list
 
 
@@ -36,52 +39,85 @@ def info_from_property(soup):
     df = pd.concat([top_info_dict, school_dict, public_info_dict,
                     all_home_feats], axis=1)
 
-    df.columns = rename_columns(df.columns)
-
-    num_bdrms = {'num_bdrms': ['num_bdrs', 'num_bdrs2']}
-    num_bths = {'num_bths': ['num_bts2', 'num_bts']}
-    sq_ft = {'sq_ft': ['sq_ft2', 'sq_ft']}
-    yblt = {'yr_blt': ['yr_bt2', 'yr_bt']}
-
-    df = df.rename(columns=lambda x: num_bdrms[x].pop(0) if x in num_bdrms.keys() else x)
-    df = df.rename(columns=lambda x: num_bths[x].pop(0) if x in num_bths.keys() else x)
-    df = df.rename(columns=lambda x: sq_ft[x].pop(0) if x in sq_ft.keys() else x)
-    df = df.rename(columns=lambda x: yblt[x].pop(0) if x in yblt.keys() else x)
+    df.columns = rename_columns_big(df.columns)
 
     return df
 
 
 def gen_url(customer_df):
-    zip_code = int(customer_df['zip'].values)
-    city = str(customer_df['city'].values)
-    type_home = (customer_df['home_type'].values)
-    price = float(customer_df['price'].values)
-    num_bds = int(customer_df['num_bds'].values)
-    num_bths = float(customer_df['num_bths'].values)
-    sqft = int(customer_df['sq_ft'].values)
-    yr_blt = int(customer_df['yr_blt'].values)
-    lot_sqft = int(customer_df['lot_sf'].values)
-    hoa = customer_df['HOA'].values
-    hoa_fee = float(customer_df['HOA_fee'].values)
+    zip_code = int(customer_df['zip_code'][1])
+    city = customer_df['city'][1].replace(',', '')
+    type_home = customer_df['style'][1]
+
+    if 'last_sold_price' in customer_df.columns:
+        price = float(customer_df['last_sold_price'][
+                      1].replace('$', '').replace(',', ''))
+    else:
+        price = float(customer_df['price'][1].replace(
+            '$', '').replace(',', '').replace('+', ''))
+
+    num_bds = int(customer_df['num_bdrs'][1])
+
+    num_bths = float(customer_df['num_bts'][1])
+
+    sqft = int(customer_df['sq_ft'][1].replace(',', '').replace(' ', ''))
+
+    if 'yr_bt' in customer_df.columns:
+        yr_blt = int(customer_df['yr_bt'][1])
+    elif 'year_built' in customer_df.columns:
+        yr_blt = int(customer_df['year_built'][1])
+
+    lot_sqft = customer_df['lot_size'][1].replace(
+        ',', '').replace(' ', '').replace('—', '0')
+
+    if ('Sq' in lot_sqft or 'Ft' in lot_sqft):
+        lot_sqft = int(''.join(num for num in re.findall(r'\d', lot_sqft)))
+    elif ('ac' in lot_sqft or 're' in lot_sqft):
+        lot_sqft = int(
+            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?', lot_sqft))) * 43560)
+    elif (float(lot_sqft) > 0 and float(lot_sqft) < 10):
+        lot_sqft = int(
+            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?', lot_sqft))) * 43560)
+    else:
+        lot_sqft = int(''.join(num for num in re.findall(r'\d', lot_sqft)))
+
+    if 'hoa' in customer_df.columns:
+        hoa = customer_df['hoa'].values
+        hoa_fee = float(customer_df['hoa_fee'].values)
+        url_part_nine = ',' + search_url_part_nine_gen(hoa_fee)
+    else:
+        url_part_nine = ''
 
     url_part_one = 'https://www.redfin.com/zipcode/' + \
-        str(zip_code) + '/filter/sort=lo-days/'
+        str(zip_code) + '/filter/sort=lo-days'
 
-    url_part_two = search_url_part_two_gen(type_home)
+    url_part_two = ',' + search_url_part_two_gen(type_home)
+    if len(url_part_two) <= 2:
+        url_part_two = ''
 
-    url_part_three = search_url_part_three_gen(price)
+    url_part_three = ',' + search_url_part_three_gen(price)
+    if len(url_part_three) <= 2:
+        url_part_three = ''
 
-    url_part_four = search_url_part_four_gen(num_bds)
+    url_part_four = ',' + search_url_part_four_gen(num_bds)
+    if len(url_part_four) <= 2:
+        url_part_four = ''
 
-    url_part_five = search_url_part_five_gen(num_bths)
+    url_part_five = ',' + search_url_part_five_gen(num_bths)
+    if len(url_part_five) <= 2:
+        url_part_five = ''
 
-    url_part_six = search_url_part_six_gen(sqft)
+    url_part_six = ',' + search_url_part_six_gen(sqft)
+    if len(url_part_six) <= 2:
+        url_part_six = ''
 
-    url_part_seven = search_url_part_seven_gen(yr_blt)
+    url_part_seven = ',' + search_url_part_seven_gen(yr_blt)
+    if len(url_part_seven) <= 2:
+        url_part_seven = ''
 
-    url_part_eight = search_url_part_eight_gen(lot_sqft)
-
-    url_part_nine = search_url_part_nine_gen(hoa)
+    url_part_eight = ',' + search_url_part_eight_gen(lot_sqft)
+    if (len(url_part_eight) <= 1 or (type_home == 'Condo/Co-op' or type_home == 'Townhouse')):
+        url_part_eight = ''
 
     search_url = url_part_one + url_part_two + url_part_three + \
         url_part_four + url_part_five + url_part_six + \

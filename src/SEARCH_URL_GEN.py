@@ -2,6 +2,7 @@
 # Github: Data-is-Life
 # Date: 10/02/2018
 
+import re
 
 def search_url_part_two_gen(type_home):
 
