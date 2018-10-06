@@ -27,16 +27,15 @@ header = random.sample(ua, 1)[0]
 proxy = random.sample(proxies, 1)[0]
 
 
-# def prop_count_by_zip(soup):
+def prop_count_(soup):
 
-# 	prp_list = []
+    all_count = soup.findAll('div', {'class': 'homes summary'})
+    if len(str(all_count)) >= 20:
+        prp_list = [re.findall('\d+', num.text) for num in all_count]
+        return prp_list[0][0]
+    else:
+        print('Error on Page. Please try running it again.')
 
-#     all_count = soup.findAll('div', {'class': 'homes summary'})
-
-#     if len(str(all_count)) >= 20:
-#     	prp_list = [num for num in all_count]
-
-#     return prp_list
 
 def props_from_search_page(soup):
 
@@ -53,19 +52,63 @@ def props_from_search_page(soup):
 
 def get_results(soup):
 
-	# total_props_found = prop_count_by_zip(soup)
+	print(f'Found {prop_count_(soup)} properties')
 
 	results_from_search_page = props_from_search_page(soup)
 
 	search_result_url_list = results_from_search_page['home_link']
 
 	if len(search_result_url_list)>=2:
-		print('Found at least two homes like the one you entered')
+		print('Here are top two homes out of {prop_count_(soup)}:')
 		print(f'Home # 1: {search_result_url_list[0]}')
 		print(f'Home # 2: {search_result_url_list[1]}')
 	elif len(search_result_url_list)==1:
-		print('Found only one home like the one you entered')
+		print('Here is the only home I could find like the one you entered:')
 		print(f'Home # 1: {search_result_url_list[0]}')
 	else:
-		print("Didn't find anything in the same zip code")
-		# customer_response = input("Would you like to see similar homes in the whole city? (y or n): ")
+		print("Didn't find anything in the same zip code, or got Captcha from Redfin")
+		customer_response_1 = input("Would you like to run the search again? (y or n): ")
+
+		if customer_response_1 == 'y':
+			print(f'Found {prop_count_(soup)} properties')
+
+			results_from_search_page = props_from_search_page(soup)
+
+			search_result_url_list = results_from_search_page['home_link']
+
+			if len(search_result_url_list)>=2:
+
+				print('Here are top two homes out of {prop_count_(soup)}:')
+
+				print(f'Home # 1: {search_result_url_list[0]}')
+				print(f'Home # 2: {search_result_url_list[1]}')
+
+			elif len(search_result_url_list)==1:
+
+				print('Here is the only home I could find like the one you entered:')
+				print(f'Home # 1: {search_result_url_list[0]}')
+
+			else:
+				print("Still didn't find anything in the same zip code, or keep getting captcha from Redfin")
+
+				customer_response = input("Would you like to see similar homes in the city? (y or n): ")
+
+				if customer_response.lower() == 'y':
+					city_url = gen_city_url(customer_df)
+
+					soup_ = session_creator(proxy, ua, city_url)
+
+					print(f'Found {prop_count_(soup)} properties')
+
+					results_from_search_page = props_from_search_page(soup)
+
+					search_result_url_list = results_from_search_page['home_link']
+					if len(search_result_url_list)>=2:
+						print('Here are top two homes out of {prop_count_(soup)}:')
+						print(f'Home # 1: {search_result_url_list[0]}')
+						print(f'Home # 2: {search_result_url_list[1]}')
+					elif len(search_result_url_list)==1:
+						print('Here is the only home I could find like the one you entered:')
+						print(f'Home # 1: {search_result_url_list[0]}')
+					else:
+						print("Didn't find anything in the city either, or captcha is strong with Redfin")

@@ -4,12 +4,15 @@
 
 import re
 
+
 def search_url_part_two_gen(type_home):
 
-    if (type_home == re.compile('^Condo') or type_home == re.compile('^Town')):
+    #(type_home == re.compile('^Condo') or type_home == re.compile('^Town')):
+    if (re.match('Condo', type_home) != None or re.match('Town', type_home) != None):
         url = 'property-type=condo+townhouse'
-    elif type_home == re.compile('^Single Family'):
-        url = 'property-type=House'
+    # type_home == re.compile('^Single'):
+    elif re.match('Single', type_home) != None:
+        url = 'property-type=house'
     else:
         url = ''
 
