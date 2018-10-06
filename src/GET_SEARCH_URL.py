@@ -3,7 +3,10 @@
 # Date: 10/03/2018
 
 
-import re, urllib, random, requests
+import re
+import urllib
+import random
+import requests
 import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
@@ -19,12 +22,15 @@ from SEARCH_URL_GEN import *
 ua = user_agent_list
 proxies = proxies_list_
 
+
 def rename_columns_big(strs_to_replace):
     modified_list = []
     for num in strs_to_replace:
-        modified_list.append(num.replace('Sq. Ft.','SQFT2').lower().replace(':  ', '').replace(': ', '').replace(
-            '.', '').replace('  ', '').replace(' ', '_').replace('_(', '_').replace(')', '').replace(')', '').replace(
-            ',', '').replace('minimum', 'min').replace('maximum', 'max').replace('$', 'price'))
+        modified_list.append(num.lower().replace('bedrooms', 'beds').replace(
+            '# of ', 'num_').replace('sq. ft.', 'sq_ft').replace(':  ', '').replace(
+            ': ', '').replace('.', '').replace('  ', '').replace(' ', '_').replace(
+            '_(', '_').replace(')', '').replace(')', '').replace(',', '').replace(
+            'minimum', 'min').replace('maximum', 'max').replace('$', 'price'))
     return modified_list
 
 
@@ -51,7 +57,7 @@ def gen_zip_url(customer_df):
 
     if 'last_sold_price' in customer_df.columns:
         price = float(customer_df['last_sold_price'][
-                      1].replace('$', '').replace(',', ''))
+            1].replace('$', '').replace(',', ''))
     else:
         price = float(customer_df['price'][1].replace(
             '$', '').replace(',', '').replace('+', ''))
@@ -63,9 +69,9 @@ def gen_zip_url(customer_df):
     sqft = int(customer_df['sq_ft'][1].replace(',', '').replace(' ', ''))
 
     if 'yr_bt' in customer_df.columns:
-        yr_blt = int(customer_df['yr_bt'][1].replace('—','5000'))
+        yr_blt = int(customer_df['yr_bt'][1].replace('—', '5000'))
     elif 'year_built' in customer_df.columns:
-        yr_blt = int(customer_df['year_built'][1].replace('—','5000'))
+        yr_blt = int(customer_df['year_built'][1].replace('—', '5000'))
 
     lot_sqft = customer_df['lot_size'][1].replace(
         ',', '').replace(' ', '').replace('—', '0')
@@ -91,7 +97,7 @@ def gen_zip_url(customer_df):
         url_part_nine = ''
 
     url_part_one = 'https://www.redfin.com/zipcode/' + \
-        str(zip_code) + '/filter/sort=lo-days'
+        (zip_code) + '/filter/sort=lo-days'
 
     url_part_two = ',' + search_url_part_two_gen(type_home)
     if len(url_part_two) <= 2:
@@ -127,6 +133,7 @@ def gen_zip_url(customer_df):
 
     return search_url
 
+
 def gen_city_url(customer_df):
     city = customer_df['city'][1].replace(',', '').replace(' ', '-')
     if city[-1] == '-':
@@ -135,7 +142,7 @@ def gen_city_url(customer_df):
 
     if 'last_sold_price' in customer_df.columns:
         price = float(customer_df['last_sold_price'][
-                      1].replace('$', '').replace(',', ''))
+            1].replace('$', '').replace(',', ''))
     else:
         price = float(customer_df['price'][1].replace(
             '$', '').replace(',', '').replace('+', ''))
@@ -147,9 +154,9 @@ def gen_city_url(customer_df):
     sqft = int(customer_df['sq_ft'][1].replace(',', '').replace(' ', ''))
 
     if 'yr_bt' in customer_df.columns:
-        yr_blt = int(customer_df['yr_bt'][1].replace('—','5000'))
+        yr_blt = int(customer_df['yr_bt'][1].replace('—', '5000'))
     elif 'year_built' in customer_df.columns:
-        yr_blt = int(customer_df['year_built'][1].replace('—','5000'))
+        yr_blt = int(customer_df['year_built'][1].replace('—', '5000'))
 
     lot_sqft = customer_df['lot_size'][1].replace(
         ',', '').replace(' ', '').replace('—', '0')
@@ -204,8 +211,7 @@ def gen_city_url(customer_df):
     if (len(url_part_eight) <= 1 or (type_home == re.compile('^Cond') or type_home == re.compile('^Town'))):
         url_part_eight = ''
 
-    search_url = url_part_one + url_part_two + url_part_three + \
-        url_part_four + url_part_five + url_part_six + \
-        url_part_seven + url_part_eight + url_part_nine
+    search_url = url_part_one + url_part_two + url_part_three + url_part_four + \
+        url_part_five + url_part_six + url_part_seven + url_part_eight + url_part_nine
 
     return search_url

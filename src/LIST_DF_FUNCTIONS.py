@@ -2,7 +2,10 @@
 # Github: Data-is-Life
 # Date: 09/27/2018
 
-import re, sys, random, string
+import re
+import sys
+import random
+import string
 import pandas as pd
 
 

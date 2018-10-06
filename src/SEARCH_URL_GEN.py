@@ -21,95 +21,99 @@ def search_url_part_two_gen(type_home):
 
 def search_url_part_three_gen(price):
 
-    if price <= 49999:
+    if price <= 50000:
         url = 'max-price=75k'
-    elif price <= 74999:
+    elif price <= 75000:
         url = 'max-price=125k'
-    elif price <= 99999:
+    elif price <= 100000:
         url = 'min-price=50k,max-price=125k'
-    elif price <= 124999:
+    elif price <= 125000:
         url = 'min-price=75k,max-price=150k'
-    elif price <= 149999:
+    elif price <= 150000:
         url = 'min-price=100k,max-price=200k'
-    elif price <= 174999:
+    elif price <= 175000:
         url = 'min-price=125k,max-price=225k'
-    elif price <= 199999:
+    elif price <= 200000:
         url = 'min-price=150k,max-price=250k'
-    elif price <= 224999:
+    elif price <= 225000:
         url = 'min-price=150k,max-price=275k'
-    elif price <= 249999:
+    elif price <= 250000:
         url = 'min-price=200k,max-price=325k'
-    elif price <= 274999:
+    elif price <= 275000:
         url = 'min-price=225k,max-price=350k'
-    elif price <= 299999:
+    elif price <= 300000:
         url = 'min-price=225k,max-price=375k'
-    elif price <= 324999:
+    elif price <= 325000:
         url = 'min-price=250k,max-price=400k'
-    elif price <= 349999:
+    elif price <= 350000:
         url = 'min-price=275k,max-price=400k'
-    elif price <= 374999:
+    elif price <= 375000:
         url = 'min-price=300k,max-price=450k'
-    elif price <= 399999:
+    elif price <= 400000:
         url = 'min-price=325k,max-price=475k'
-    elif price <= 424999:
+    elif price <= 425000:
         url = 'min-price=350k,max-price=500k'
-    elif price <= 449999:
+    elif price <= 450000:
         url = 'min-price=375k,max-price=500k'
-    elif price <= 474999:
+    elif price <= 475000:
         url = 'min-price=400k,max-price=550k'
-    elif price <= 499999:
-        url = 'min-price=425k,max-price=575k'
-    elif price <= 549999:
-        url = 'min-price=500k,max-price=625k'
-    elif price <= 599999:
-        url = 'min-price=475k,max-price=675k'
-    elif price <= 649999:
-        url = 'min-price=550k,max-price=725k'
-    elif price <= 699999:
+    elif price <= 500000:
+        url = 'min-price=425k,max-price=550k'
+    elif price <= 550000:
+        url = 'min-price=500k,max-price=600k'
+    elif price <= 600000:
+        url = 'min-price=475k,max-price=650k'
+    elif price <= 625000:
+        url = 'min-price=500k,max-price=675k'
+    elif price <= 650000:
+        url = 'min-price=550k,max-price=700k'
+    elif price <= 675000:
+        url = 'min-price=575k,max-price=725k'
+    elif price <= 700000:
         url = 'min-price=600k,max-price=775k'
-    elif price <= 749999:
-        url = 'min-price=650k,max-price=850k'
-    elif price <= 799999:
+    elif price <= 725000:
+        url = 'min-price=650k,max-price=800k'
+    elif price <= 800000:
         url = 'min-price=700k,max-price=900k'
-    elif price <= 849999:
+    elif price <= 850000:
         url = 'min-price=725k,max-price=950k'
-    elif price <= 899999:
+    elif price <= 900000:
         url = 'min-price=750k,max-price=1M'
-    elif price <= 999999:
+    elif price <= 1000000:
         url = 'min-price=850k,max-price=1.25M'
-    elif price <= 1249999:
+    elif price <= 1250000:
         url = 'min-price=900k,max-price=1.5M'
-    elif price <= 1499999:
+    elif price <= 1500000:
         url = 'min-price=950k,max-price=2M'
-    elif price <= 1749999:
+    elif price <= 1750000:
         url = 'min-price=1.25M,max-price=2.25M'
-    elif price <= 1999999:
+    elif price <= 2000000:
         url = 'min-price=1.5M,max-price=2.5M'
-    elif price <= 2249999:
+    elif price <= 2250000:
         url = 'min-price=1.5M,max-price=2.75M'
-    elif price <= 2499999:
+    elif price <= 2500000:
         url = 'min-price=1.75M,max-price=3.25M'
-    elif price <= 2749999:
+    elif price <= 2750000:
         url = 'min-price=2M,max-price=3.25M'
-    elif price <= 2999999:
+    elif price <= 3000000:
         url = 'min-price=2.25M,max-price=3.5M'
-    elif price <= 3249999:
+    elif price <= 3250000:
         url = 'min-price=2.75M,max-price=3.75M'
-    elif price <= 3499999:
+    elif price <= 3500000:
         url = 'min-price=3M,max-price=4.25M'
-    elif price <= 3749999:
+    elif price <= 3750000:
         url = 'min-price=3.25M,max-price=4.5M'
-    elif price <= 3999999:
+    elif price <= 4000000:
         url = 'min-price=3.25M,max-price=5M'
-    elif price <= 4249999:
+    elif price <= 4250000:
         url = 'min-price=3.25M,max-price=6M'
-    elif price <= 4999999:
+    elif price <= 5000000:
         url = 'min-price=3.5M,max-price=6M'
-    elif price <= 5249999:
+    elif price <= 5250000:
         url = 'min-price=4.25M,max-price=7M'
-    elif price <= 6999999:
+    elif price <= 7000000:
         url = 'min-price=4.5M,max-price=10M'
-    elif price <= 7999999:
+    elif price <= 8000000:
         url = 'min-price=5M'
     elif price <= 12000000:
         url = 'min-price=6M'
@@ -169,49 +173,57 @@ def search_url_part_five_gen(num_bths):
 
 def search_url_part_six_gen(sqft):
 
-    if sqft <= 300:
+    if sqft <= 350:
         url = 'max-sqft=500-sqft'
-    elif sqft <= 499:
+    elif sqft <= 600:
         url = 'max-sqft=750-sqft'
-    elif sqft <= 649:
+    elif sqft <= 825:
         url = 'min-sqft=500-sqft,max-sqft=1k-sqft'
-    elif sqft <= 849:
-        url = 'min-sqft=500-sqft,max-sqft=1.25k-sqft'
-    elif sqft <= 949:
-        url = 'min-sqft=750-sqft,max-sqft=1.5k-sqft'
-    elif sqft <= 1099:
-        url = 'min-sqft=750-sqft,max-sqft=1.5k-sqft'
-    elif sqft <= 1299:
+    elif sqft <= 900:
+        url = 'min-sqft=750-sqft,max-sqft=1.25k-sqft'
+    elif sqft <= 1025:
+        url = 'min-sqft=1k-sqft,max-sqft=1.25k-sqft'
+    elif sqft <= 1200:
+        url = 'min-sqft=1k-sqft,max-sqft=1.5k-sqft'
+    elif sqft <= 1400:
         url = 'min-sqft=1k-sqft,max-sqft=1.75k-sqft'
-    elif sqft <= 1599:
+    elif sqft <= 1500:
+        url = 'min-sqft=1.25k-sqft,max-sqft=1.75k-sqft'
+    elif sqft <= 1650:
         url = 'min-sqft=1.25k-sqft,max-sqft=2k-sqft'
-    elif sqft <= 1799:
+    elif sqft <= 1750:
+        url = 'min-sqft=1.5k-sqft,max-sqft=2k-sqft'
+    elif sqft <= 1900:
         url = 'min-sqft=1.5k-sqft,max-sqft=2.25k-sqft'
-    elif sqft <= 1999:
-        url = 'min-sqft=1.5k-sqft,max-sqft=2.5k-sqft'
-    elif sqft <= 2199:
+    elif sqft <= 2050:
+        url = 'min-sqft=1.75k-sqft,max-sqft=2.5k-sqft'
+    elif sqft <= 2200:
         url = 'min-sqft=1.75k-sqft,max-sqft=2.75k-sqft'
-    elif sqft <= 2499:
+    elif sqft <= 2350:
         url = 'min-sqft=2k-sqft,max-sqft=3k-sqft'
-    elif sqft <= 2749:
+    elif sqft <= 2550:
+        url = 'min-sqft=2.25k-sqft,max-sqft=3k-sqft'
+    elif sqft <= 2750:
         url = 'min-sqft=2.25k-sqft,max-sqft=3.5k-sqft'
-    elif sqft <= 2999:
-        url = 'min-sqft=2.25k-sqft,max-sqft=4k-sqft'
-    elif sqft <= 3499:
-        url = 'min-sqft=3k-sqft,max-sqft=4.5k-sqft'
-    elif sqft <= 3999:
+    elif sqft <= 2950:
+        url = 'min-sqft=2.5k-sqft,max-sqft=3.5k-sqft'
+    elif sqft <= 3150:
+        url = 'min-sqft=2.75k-sqft,max-sqft=4k-sqft'
+    elif sqft <= 3750:
         url = 'min-sqft=3k-sqft,max-sqft=5k-sqft'
-    elif sqft <= 4499:
+    elif sqft <= 3950:
+        url = 'min-sqft=3.5k-sqft,max-sqft=5k-sqft'
+    elif sqft <= 4300:
         url = 'min-sqft=3.5k-sqft,max-sqft=7.5k-sqft'
-    elif sqft <= 4999:
+    elif sqft <= 4700:
         url = 'min-sqft=4k-sqft,max-sqft=7.5k-sqft'
-    elif sqft <= 5499:
-        url = 'min-sqft=4.5k-sqft,max-sqft=7.5k-sqft'
-    elif sqft <= 5999:
-        url = 'min-sqft=4.5k-sqft'
-    elif sqft <= 7999:
+    elif sqft <= 5500:
+        url = 'min-sqft=5k-sqft,max-sqft=7.5k-sqft'
+    elif sqft <= 6000:
         url = 'min-sqft=5k-sqft'
-    elif sqft >= 10000:
+    elif sqft <= 10050:
+        url = 'min-sqft=5k-sqft'
+    elif sqft >= 10050:
         url = 'min-sqft=7.5k-sqft'
     else:
         url = ''
@@ -222,17 +234,23 @@ def search_url_part_six_gen(sqft):
 def search_url_part_seven_gen(yr_blt):
 
     if yr_blt <= 1900:
-        url = 'max-year-built=1940k'
-    elif yr_blt <= 1960:
-        url = 'min-year-built=1900,max-year-built=1970'
-    elif yr_blt <= 1980:
-        url = 'min-year-built=1950,max-year-built=2000'
+        url = 'max-year-built=1950'
+    elif yr_blt <= 1935:
+        url = 'max-year-built=1960'
+    elif yr_blt <= 1955:
+        url = 'min-year-built=1930,max-year-built=1970'
+    elif yr_blt <= 1965:
+        url = 'min-year-built=1940,max-year-built=1980'
+    elif yr_blt <= 1975:
+        url = 'min-year-built=1950,max-year-built=1980'
+    elif yr_blt <= 1985:
+        url = 'min-year-built=1960,max-year-built=2000'
     elif yr_blt <= 1995:
-        url = 'min-year-built=1970,max-year-built=2005'
-    elif yr_blt <= 2000:
         url = 'min-year-built=1980,max-year-built=2010'
     elif yr_blt <= 2005:
         url = 'min-year-built=1990,max-year-built=2015'
+    elif yr_blt <= 2015:
+        url = 'min-year-built=2000'
     elif yr_blt <= 2018:
         url = 'min-year-built=2005'
     else:
@@ -245,7 +263,7 @@ def search_url_part_eight_gen(lot_sqft):
 
     if lot_sqft <= 2000:
         url = 'max-lot-size=8k-sqft'
-    elif lot_sqft <= 5200:
+    elif lot_sqft <= 4500:
         url = 'min-lot-size=2k-sqft,max-lot-size=0.25-acre'
     elif lot_sqft <= 7500:
         url = 'min-lot-size=4.5k-sqft,max-lot-size=0.25-acre'

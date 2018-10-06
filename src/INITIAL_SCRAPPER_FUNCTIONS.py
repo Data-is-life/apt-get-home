@@ -3,13 +3,21 @@
 # Date: 09/30/2018
 
 from math import ceil
-import time, re, ast, sys, urllib, random, string, requests
+import time
+import re
+import ast
+import sys
+import urllib
+import random
+import string
+import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 from itertools import cycle
+
 
 def session_creator(proxy, ua, url):
 
