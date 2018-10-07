@@ -55,6 +55,7 @@ def search_url_part_three_gen(price):
     elif price >= 2000000:
         url = 'min-price=1.5M,max-price=2.5M'
     elif price >= 1750000:
+        url = 'min-price=1.5M,max-price=2.25M'
     elif price >= 1500000:
         url = 'min-price=950k,max-price=2M'
     elif price >= 1250000:
@@ -121,7 +122,6 @@ def search_url_part_three_gen(price):
         url = 'max-price=75k'
     elif (price > 1 and price < 35000):
         url = 'max-price=50k'
-    elif price >= 675000:
     else:
         url = ''
 
@@ -286,9 +286,9 @@ def search_url_part_eight_gen(lot_sqft):
     elif lot_sqft >= 38000:
         url = 'min-lot-size=0.25-acre,max-lot-size=3-acre'
     elif lot_sqft >= 20000:
-        url = 'min-lot-size=8k-sqft,max-lot-size=1-acre'
+        url = 'min-lot-size=8k-sqft,max-lot-size=2-acre'
     elif lot_sqft >= 13000:
-        url = 'min-lot-size=6.5k-sqft,max-lot-size=0.5-acre'
+        url = 'min-lot-size=6.5k-sqft,max-lot-size=1-acre'
     elif lot_sqft >= 10000:
         url = 'min-lot-size=4.5k-sqft,max-lot-size=0.5-acre'
     elif lot_sqft >= 7500:
@@ -306,34 +306,34 @@ def search_url_part_eight_gen(lot_sqft):
 This could be crucial, since the closer the search to the HOA dues, if any,
 from the home of their liking, the better the results'''
 
-def search_url_part_nine_gen(hoa):
+def search_url_part_nine_gen(hoa_fee):
 
     if hoa_fee >= 900:
-        url = ',hoa=1000'
+        url = 'hoa=1000'
     elif hoa_fee >= 800:
-        url = ',hoa=900'
+        url = 'hoa=900'
     elif hoa_fee >= 700:
-        url = ',hoa=800'
+        url = 'hoa=800'
     elif hoa_fee >= 600:
-        url = ',hoa=700'
+        url = 'hoa=700'
     elif hoa_fee >= 500:
-        url = ',hoa=600'
+        url = 'hoa=600'
     elif hoa_fee >= 400:
-        url = ',hoa=500'
+        url = 'hoa=500'
     elif hoa_fee >= 300:
-        url = ',hoa=400'
+        url = 'hoa=400'
     elif hoa_fee >= 250:
-        url = ',hoa=300'
+        url = 'hoa=300'
     elif hoa_fee >= 200:
-        url = ',hoa=250'
+        url = 'hoa=250'
     elif hoa_fee >= 150:
-        url = ',hoa=200'
+        url = 'hoa=200'
     elif hoa_fee >= 100:
-        url = ',hoa=150'
+        url = 'hoa=150'
     elif hoa_fee >= 75:
-        url = ',hoa=125'
+        url = 'hoa=125'
     elif hoa_fee >= 50:
-        url = ',hoa=100'
+        url = 'hoa=100'
     else:
         url = ''
 

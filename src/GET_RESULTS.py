@@ -75,7 +75,6 @@ def get_results(soup, customer_df):
         print(f'Home # 1: {search_result_url_list[0]}')
         print(f'Home # 2: {search_result_url_list[1]}')
     elif len(search_result_url_list) == 1:
-        if
         print('Here is the only home I could find like the one you entered:')
         print(f'Home # 1: {search_result_url_list[0]}')
     elif 'captcha' in soup.text:
@@ -99,6 +98,6 @@ def get_results(soup, customer_df):
                 print('Here is the only home I could find like the one you entered:')
                 print(f'Home: {search_result_url_list[0]}')
             elif 'captcha' in soup_.text:
-                    print("Getting captcha from Redfin")
-                else:
-                    print ("Didn't find anything similar in the same city either. I'm working on improving your next experience")
+                print("Getting captcha from Redfin")
+            else:
+                print ("Didn't find anything similar in the same city either. I'm working on improving your next experience")

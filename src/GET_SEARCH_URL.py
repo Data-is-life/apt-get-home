@@ -109,7 +109,6 @@ def gen_last_part_url(customer_df):
 
     if 'hoa_fees' in customer_df.columns:
         hoa_fee = float(customer_df['hoa_fees'].values)
-
         url_part_nine = ',' + search_url_part_nine_gen(hoa_fee)
     else:
         url_part_nine = ''
