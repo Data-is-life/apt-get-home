@@ -8,6 +8,8 @@ import random
 import string
 import pandas as pd
 
+''' This will be used later to collect data to run feature importance when it
+comes to pricing homes'''
 
 def strip_count(lst):
     rx_num_homes = r'\d+\shomes'
@@ -48,6 +50,8 @@ def strip_count(lst):
         data={'zip': zip_list, 'median_price': median_list, 'num_ap_homes': num_homes_list})
     return df
 
+''' This will be used later to collect data to run feature importance when it
+comes to pricing homes'''
 
 def gen_url_list(zip_list):
     active_url_list = []

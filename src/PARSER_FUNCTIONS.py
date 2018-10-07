@@ -11,21 +11,28 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
 
+''' Keeping Dataframe heading formating consistant by converting all values to
+standardized format that is easy to trace back'''
 
 def rename_columns(strs_to_replace):
     modified_list = []
     for num in strs_to_replace:
         modified_list.append(num.replace('Redfin Estimate', 'redfin_est').replace(
-            'baths', 'num_bts').replace('Beds', 'num_bdrs').replace(
-            'Baths', 'num_bts').lower().replace('built: ', 'yr_blt').replace(
-            ':  ', '').replace(': ', '').replace('.', '').replace('  ', '').replace(
-            'sqft', 'sq_ft').replace(' ', '_').replace('_(', '_').replace(
-            ')', '').replace(')', '').replace(',', '').replace('minimum', 'min').replace(
-            'maximum', 'max').replace('$', 'price'))
+            'Beds', 'num_bdrs').replace('beds', 'num_bts').replace(
+            'Baths', 'num_bts').replace('$', 'price').replace(
+            'Built: ', 'yr_blt').lower().replace('__', '_').replace(
+            ' ', '_').replace(':_', '').replace(':', '').replace('.', '').replace(
+            'sqft', 'sq_ft').replace('_(', '_').replace('(', '_').replace(
+            ')', '').replace(',', '').replace('minimum', 'min').replace(
+            'maximum', 'max').replace('bedrooms', 'beds').replace(
+            'bathrooms', 'baths').replace('#_of_', 'num_').replace(
+            'sq. ft.', 'sqft'))
     return modified_list
 
 
-def top_info_parser(soup, _count):
+'''Starting with getting the information at the very top of the page'''
+
+def top_info_parser(soup):
 
     all_top = soup.findAll('div', {'class': 'HomeInfo inline-block'})
 
@@ -104,14 +111,13 @@ def top_info_parser(soup, _count):
     else:
         all_info_dict['description'] = 'N/A'
 
-    df = pd.DataFrame(all_info_dict, index=[_count])
-
-    df.columns = rename_columns(df.columns)
-
-    return df
+    return all_info_dict
 
 
-def public_info_parser(soup, _count):
+'''Getting information from tax sources to ensure all the home information
+matches from Zillow, Agent, and Tax records'''
+
+def public_info_parser(soup):
     all_info = soup.findAll('div', {'data-rf-test-id': 'publicRecords'})
 
     label_list = []
@@ -129,10 +135,13 @@ def public_info_parser(soup, _count):
 
     public_info_dict = dict(zip(label_list, values_list))
 
-    return pd.DataFrame(public_info_dict, index=[_count])
+    return public_info_dict
 
+''' Getting schools and the grades they attend with their score from
+GreatSchools this will be added as a feature for homes bigger than
+three bedrooms and all single family homes.'''
 
-def school_parser(soup, _count):
+def school_parser(soup):
     school_dict = {}
     school_info = soup.findAll('div', {'class': "name-and-info"})
     school_names = []
@@ -204,10 +213,11 @@ def school_parser(soup, _count):
         school_dict['high_school_grades'] = 'N/A'
         school_dict['high_school_rating'] = 'N/A'
 
-    return pd.DataFrame(school_dict, index=[_count])
+    return school_dict
 
+''' All the listed features by the broker inputting the listing on the MLS'''
 
-def feats_parser(soup, _count):
+def feats_parser(soup):
 
     all_home_feats = soup.findAll('span', {'class': "entryItemContent"})
 
@@ -230,7 +240,72 @@ def feats_parser(soup, _count):
     feat_cats = [str(num) for num in feat_cats]
     feat_vals = [str(num) for num in feat_vals]
 
-    df = pd.DataFrame(dict(zip(feat_cats, feat_vals)), index=[_count])
-    print(df.columns)
+    feats_dict = dict(zip(feat_cats, feat_vals))
 
-    return df
+    extra_feats = []
+
+    for k, v in feats_dict.items():
+        if 'span>' in k:
+            extra_feats.append(k)
+
+    for num in extra_feats:
+        if num in feats_dict.keys():
+            feats_dict.pop(num)
+
+    extra_feats = [num.replace('<span>', '').replace('</span>', '').replace(
+        '<a href=', '').replace('"', '').replace(' rel=nofollow', '').replace(
+        ' target=_blank>', '').replace('Virtual Tour (External Link)', '').replace(
+        '</a', '').replace('>','').replace('&amp;', '&').replace('(s)','') for num
+        in extra_feats]
+
+    x_feat_string = ', '.join([num for num in extra_feats])
+    x_feat_string = x_feat_string.split(sep=', ')
+    x_feat_list = list(set(x_feat_string))
+
+    feats_dict['extra_feats'] = ', '.join([num for num in x_feat_list])
+
+    return feats_dict
+
+
+'''Need to get additional information, so we don't miss anything that
+could prove to be critical later'''
+
+def additional_info(soup):
+    cats_ = soup.findAll('span', {'class': re.compile('^header ')})
+    cats_ = [num.text for num in cats_]
+    vals_ = soup.findAll('span', {'class': re.compile('^content ')})
+    vals_ = [num.text for num in vals_]
+
+    cats_ = [str(num).replace('Property Type', 'prop_type').replace(
+        'HOA Dues', 'hoa_fees') for num in cats_]
+    vals_ = [str(num).replace('$', '').replace('/month', '').replace(
+        'Hi-Rise', 'Condo').replace('Residential','Single Family Residence') for num in vals_]
+
+    return dict(zip(cats_, vals_))
+
+''' Putting all the information together in a Dataframe and removing any
+duplicate columns.'''
+
+def info_from_property(soup):
+
+    top_info_dict = top_info_parser(soup)
+    public_info_dict = public_info_parser(soup)
+    school_dict = school_parser(soup)
+    all_home_feats = feats_parser(soup)
+    mid_info_feats =  additional_info(soup)
+
+    df1 = pd.DataFrame(top_info_dict, index=[1])
+    df2 = pd.DataFrame(public_info_dict, index=[1])
+    df3 = pd.DataFrame(school_dict, index=[1])
+    df4 = pd.DataFrame(all_home_feats, index=[1])
+    df5 = pd.DataFrame(mid_info_feats, index=[1])
+
+    df = pd.DataFrame()
+    df = pd.concat([df1, df2, df3, df4, df5], axis=1)
+
+    df.columns = rename_columns(df.columns)
+
+    all_dict = df.to_dict()
+    new_df = pd.DataFrame(all_dict)
+
+    return new_df

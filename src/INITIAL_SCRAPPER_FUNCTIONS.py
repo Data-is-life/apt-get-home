@@ -18,6 +18,7 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 from itertools import cycle
 
+''' Simple program to create a BeautifulSoup session'''
 
 def session_creator(proxy, ua, url):
 
@@ -31,6 +32,7 @@ def session_creator(proxy, ua, url):
 
     return soup
 
+'''Checking if the proxies in the list are valid'''
 
 def proxie_check(proxies):
 
@@ -65,6 +67,8 @@ def proxie_check(proxies):
 
     return proxies
 
+''' This will be used later to collect data to run feature importance when it
+comes to pricing homes'''
 
 def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
 
@@ -107,6 +111,7 @@ def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
 
     return prp_list, zip_list, proxies, ezl
 
+''' This is used to get homes addresses and url from the search page'''
 
 def each_page(proxy, ua, url):
 
@@ -127,6 +132,8 @@ def each_page(proxy, ua, url):
 
     return df
 
+''' This will be used later to collect data to run feature importance when it
+comes to pricing homes'''
 
 def links_for_props(proxies, url_list, main_df, ua):
 
