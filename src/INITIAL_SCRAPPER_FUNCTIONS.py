@@ -44,23 +44,16 @@ def proxie_check(proxies):
         print(i + 1)
         proxy = proxies[i]
 
-        time.sleep(random.uniform(0.5, 1.5))
+        time.sleep(random.uniform(2.25, 6.5))
         start_time = time.time()
-
         try:
-
-            time.sleep(random.uniform(1, 2))
-            response = requests.get(
-                url, proxies={"http": proxy, "https": proxy})
-
+            response = requests.get(url, proxies={"http": proxy, "https": proxy})
             print(response.json())
             print(time.time() - start_time)
 
         except:
-
             print("Skipping. Connnection error")
             print(time.time() - start_time)
-
             default_list.append(i + 1)
 
         print(default_list)
