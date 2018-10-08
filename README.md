@@ -47,3 +47,87 @@ Currently it runs on a imperical model of predifined cost of each feature. Scien
 * Also, it will give users options of choosing which features their property has to calculate precise home value and the amount of time it will take to sell. 
 
 * Add agent rating also to determine which agent would get them the best value for their money.
+
+
+### Usage
+Clone this repository with the command
+
+'''
+git clone git@github.com:Data-is-life/apt-get-home.git
+'''
+
+All codes are located in **src** folder. The main file is called **app.py**. If you'd like to run in Jupyter notebook, run **Main_prog.ipynb** from the **src** folder. 
+
+The repository has the following structure. 
+
+'''
+├── Data
+│   ├── features_review.ods
+│   └── url_ranges.ods
+├── images
+│   ├── From_Bay_Area.png
+│   ├── From_Denver.png
+│   ├── From_Las_Vegas.png
+│   ├── From_Pheonix.png
+│   ├── From_Portland.png
+│   ├── From_Seattle.png
+│   ├── From_Utah.png
+│   ├── to_Bay_Area.png
+│   ├── to_Denver.png
+│   ├── to_Las_Vegas.png
+│   ├── to_Pheonix.png
+│   ├── to_Portland.png
+│   ├── to_Seattle.png
+│   └── To_Utah.png
+├── README.md
+└── src
+    ├── app.py
+    ├── FUNCTIONS.pyc
+    ├── GET_RESULTS.py
+    ├── GET_SEARCH_URL.py
+    ├── header_list.py
+    ├── INITIAL_SCRAPPER_FUNCTIONS.py
+    ├── LIST_DF_FUNCTIONS.py
+    ├── Main_prog.ipynb
+    ├── PARSER_FUNCTIONS.py
+    ├── proxies_list.py
+    ├── proxies_list.pyc
+    ├── redfin_scrapper.ipynb
+    ├── SEARCH_URL_GEN.py
+    ├── Not in use
+    │   ├── app.ipynb
+    │   ├── old_commands.py
+    │   ├── old_parser.py
+    │   ├── old_scraper.ipynb
+    │   ├── proxie_check.py
+    │   ├── unused_commands.py
+    │   └── url_gen.py
+    ├── __pycache__
+    │   ├── FUNCTIONS.cpython-36.pyc
+    │   ├── GET_RESULTS.cpython-36.pyc
+    │   ├── GET_SEARCH_URL.cpython-36.pyc
+    │   ├── header_list.cpython-36.pyc
+    │   ├── INITIAL_SCRAPPER_FUNCTIONS.cpython-36.pyc
+    │   ├── LIST_DF_FUNCTIONS.cpython-36.pyc
+    │   ├── MAIN_FUNCTIONS.cpython-36.pyc
+    │   ├── moduletest.pyc
+    │   ├── PARSER_FUNCTIONS.cpython-36.pyc
+    │   ├── proxie_check.cpython-36.pyc
+    │   ├── proxies_list.cpython-36.pyc
+    │   ├── SCRAPPER_FUNCTIONS.cpython-36.pyc
+    │   └── SEARCH_URL_GEN.cpython-36.pyc
+    ├── Presentation
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   ├── 
+    │   └── 
+    └── Tester_file.ipynb
+'''
