@@ -20,12 +20,12 @@ from itertools import cycle
 
 ''' Simple program to create a BeautifulSoup session'''
 
-def session_creator(proxy, ua, url):
+def session_creator(ua, url):
 
     header = random.sample(ua, 1)[0]
 
     session = requests.Session()
-    session.proxies = {"http": proxy, "https": proxy}
+    # session.proxies = {"http": proxy, "https": proxy}
     req = session.get(url, headers=header)
 
     soup = BeautifulSoup(req.text, 'lxml')
