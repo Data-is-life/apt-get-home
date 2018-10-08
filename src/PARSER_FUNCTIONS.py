@@ -277,7 +277,7 @@ def additional_info(soup):
     vals_ = [num.text for num in vals_]
 
     cats_ = [str(num).replace('Property Type', 'prop_type').replace(
-        'HOA Dues', 'hoa_fees') for num in cats_]
+        'HOA Dues', 'hoa_fees').replace('Type', 'prop_type') for num in cats_]
     vals_ = [str(num).replace('$', '').replace('/month', '').replace(
         'Hi-Rise', 'Condo').replace('Residential','Single Family Residence') for num in vals_]
 

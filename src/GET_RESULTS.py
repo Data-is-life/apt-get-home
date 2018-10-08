@@ -20,7 +20,6 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 from itertools import cycle
 from header_list import user_agent_list
-from proxies_list import proxies_list_
 from INITIAL_SCRAPPER_FUNCTIONS import *
 from PARSER_FUNCTIONS import *
 from LIST_DF_FUNCTIONS import *
@@ -28,10 +27,8 @@ from SEARCH_URL_GEN import *
 from GET_SEARCH_URL import *
 
 ua = user_agent_list
-proxies = proxies_list_
 
 header = random.sample(ua, 1)[0]
-proxy = random.sample(proxies, 1)[0]
 
 ''' This is used to collect number of homes that matched users interest'''
 
@@ -84,14 +81,14 @@ def get_results(soup, customer_df):
         customer_response = input("Would you like to search the entire city? (y or n): ")
         if customer_response.lower() == 'y':
             city_url = gen_city_url(customer_df)
-            soup_ = session_creator(proxy, ua, city_url)
+            soup_ = session_creator(ua, city_url)
             print(f'Found {prop_count_(soup_)} properties')
 
             results_from_search_page = props_from_search_page(soup_)
 
             search_result_url_list = results_from_search_page['home_link']
             if len(search_result_url_list) >= 2:
-                print(f'Here are top two homes out of {prop_count_(soup)}:')
+                print(f'Here are top two homes out of {prop_count_(soup_)}:')
                 print(f'Home # 1: {search_result_url_list[0]}')
                 print(f'Home # 2: {search_result_url_list[1]}')
             elif len(search_result_url_list) == 1:

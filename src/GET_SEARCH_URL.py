@@ -14,13 +14,10 @@ from selenium.webdriver.firefox.webdriver import FirefoxProfile
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 from header_list import user_agent_list
-from proxies_list import proxies_list_
 from INITIAL_SCRAPPER_FUNCTIONS import *
 from PARSER_FUNCTIONS import *
 from LIST_DF_FUNCTIONS import *
 from SEARCH_URL_GEN import *
-ua = user_agent_list
-proxies = proxies_list_
 
 
 def gen_last_part_url(customer_df):
@@ -40,7 +37,12 @@ def gen_last_part_url(customer_df):
 
     '''Making sure the type of home is used for better results'''
 
-    type_home = customer_df['prop_type'][1]
+    if 'prop_type' in customer_df.columns:
+        type_home = customer_df['prop_type'][1]
+    elif 'type' in customer_df.columns:
+        type_home = customer_df['type'][1]
+    else:
+        type = ''
 
     '''Using the Redfin Estimate first to determine the price range of the search,
     follwed by last sold price, if they property is sold, or listing price if the
@@ -162,7 +164,6 @@ def gen_city_url(customer_df):
     city = customer_df['city'][1].replace(',', '').replace(' ', '-')
     if city[-1] == '-':
         city = city[:-1]
-    type_home = customer_df['prop_type'][1]
     url_part_one = 'https://www.redfin.com/city/' + city + '/filter/sort=lo-days'
     last_part_url = gen_last_part_url(customer_df)
     url = url_part_one + last_part_url

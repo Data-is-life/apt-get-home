@@ -9,10 +9,8 @@ user interested in'''
 
 def search_url_part_two_gen(type_home):
 
-    #(type_home == re.compile('^Condo') or type_home == re.compile('^Town')):
     if ('Condo' in type_home or 'Town' in type_home):
         url = 'property-type=condo+townhouse'
-    # type_home == re.compile('^Single'):
     elif 'Single' in type_home:
         url = 'property-type=house'
     else:
