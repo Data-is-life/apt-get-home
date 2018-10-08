@@ -1,8 +1,8 @@
-# Apt-Get-Home: Home finder #
+<h1> Apt-Get-Home: Home finder</h1>
 
-Extracting all features from description and property tax records from popular real estate website to fully feature the home from the home link user enters. Then recommending user top two  properties, currently active on the market, that matches majority of the features based on the features of the home the user entered.
+<p>Extracting all features from description and property tax records from popular real estate website to fully feature the home from the home link user enters. Then recommending user top two  properties, currently active on the market, that matches majority of the features based on the features of the home the user entered.</p>
 
-## The Problem & Solution: ##
+<h2> The Problem & Solution:</h2>
 
 ### The Problem:
 Anyone looking to buy a home has a hard time putting all the features they desire into any website to search for homes and explaining to their agent. That discourages a lot of consumers to continue their search if they don't find what they are looking for after a couple of searches. Also, the websites display all the properties on the market and don't go far enough to understand their consumers needs.
@@ -10,12 +10,12 @@ Anyone looking to buy a home has a hard time putting all the features they desir
 ### My Solution:
 My model will take features from the home link or address they put in and will give the user only 2 properties that are active on the market and matches the most features of that home. 
 
-### Creating Model:
+## Creating Model:
 
-#### Data:
+### Data:
 All the data is scrapped from popular real estate website to get real time results.
 
-#### Features:
+### Features:
 
 The model takes all the information from the link user provides. Currently it works on the following features:
 
@@ -32,10 +32,10 @@ The model takes all the information from the link user provides. Currently it wo
     * If no estimate provided, use last sold price
     * If the home is still active or pending, use the listing price
 
-#### Model Selection:
+### Model Selection:
 Currently it runs on a imperical model of predifined cost of each feature. Scientific model is in work which will determine value for each feature based on user rating to the results. 
 
-### Future Work:
+## Future Work:
 * Use **NLP** to match different features and not limit just based on the basic stats. The model currently start search based on the parameters specified with no forgiveness. Add some flexibility to the parameters to have search generate results and not fail, just because it can't find within the same zip code or city. 
 
 * Get access to a real estate data API to get realtime data and not have to worry about scrapping data. 
@@ -49,18 +49,18 @@ Currently it runs on a imperical model of predifined cost of each feature. Scien
 * Add agent rating also to determine which agent would get them the best value for their money.
 
 
-### Usage
+## Usage
 Clone this repository with the command
 
-'''
+```
 git clone git@github.com:Data-is-life/apt-get-home.git
-'''
+```
 
 All codes are located in **src** folder. The main file is called **app.py**. If you'd like to run in Jupyter notebook, run **Main_prog.ipynb** from the **src** folder. 
 
 The repository has the following structure. 
 
-'''
+```
 ├── Data
 │   ├── features_review.ods
 │   └── url_ranges.ods
@@ -130,4 +130,13 @@ The repository has the following structure.
     │   ├── 
     │   └── 
     └── Tester_file.ipynb
-'''
+```
+
+## Resources used:
+
+<img src="https://www.python.org/static/community_logos/python-logo-master-v3-TM.png" width="300"></br>
+<img src="https://www.redfin.com/blog/wp-content/uploads/sites/5/2015/01/redfinlogo_blogpreview2.jpg" width="300"></br>
+<img src="https://i.imgur.com/fkPSojf.png" width="300"></br>
+<img src="https://pandas.pydata.org/_static/pandas_logo.png" width="300"></br>
+<img src="https://bids.berkeley.edu/sites/default/files/styles/400x225/public/projects/numpy_project_page.jpg?itok=flrdydei" width="300"></br>
+<img src="https://tettra.co/culture-codes/wp-content/logos/github.png" width="300"></br>
