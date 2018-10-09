@@ -64,7 +64,8 @@ The repository has the following structure.
 ├── Data
 │   ├── features_review.ods
 │   └── url_ranges.ods
-├── images
+├── img
+│   ├── Experience.png
 │   ├── From_Bay_Area.png
 │   ├── From_Denver.png
 │   ├── From_Las_Vegas.png
@@ -72,6 +73,9 @@ The repository has the following structure.
 │   ├── From_Portland.png
 │   ├── From_Seattle.png
 │   ├── From_Utah.png
+│   ├── Logo.png
+│   ├── RE Companies.png
+│   ├── RE Websites.png
 │   ├── to_Bay_Area.png
 │   ├── to_Denver.png
 │   ├── to_Las_Vegas.png
@@ -79,6 +83,8 @@ The repository has the following structure.
 │   ├── to_Portland.png
 │   ├── to_Seattle.png
 │   └── To_Utah.png
+├── Presentation
+│   └── Apt-Get-Home - Mohit Gangwani.pdf
 ├── README.md
 └── src
     ├── app.py
@@ -91,9 +97,6 @@ The repository has the following structure.
     ├── Main_prog.ipynb
     ├── PARSER_FUNCTIONS.py
     ├── proxies_list.py
-    ├── proxies_list.pyc
-    ├── redfin_scrapper.ipynb
-    ├── SEARCH_URL_GEN.py
     ├── Not in use
     │   ├── app.ipynb
     │   ├── old_commands.py
@@ -102,6 +105,7 @@ The repository has the following structure.
     │   ├── proxie_check.py
     │   ├── unused_commands.py
     │   └── url_gen.py
+    ├── proxies_list.pyc
     ├── __pycache__
     │   ├── FUNCTIONS.cpython-36.pyc
     │   ├── GET_RESULTS.cpython-36.pyc
@@ -116,19 +120,6 @@ The repository has the following structure.
     │   ├── proxies_list.cpython-36.pyc
     │   ├── SCRAPPER_FUNCTIONS.cpython-36.pyc
     │   └── SEARCH_URL_GEN.cpython-36.pyc
-    ├── Presentation
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   ├── 
-    │   └── 
     └── Tester_file.ipynb
 ```
 
@@ -140,3 +131,4 @@ The repository has the following structure.
 <img src="https://pandas.pydata.org/_static/pandas_logo.png" width="300"></br>
 <img src="https://bids.berkeley.edu/sites/default/files/styles/400x225/public/projects/numpy_project_page.jpg?itok=flrdydei" width="300"></br>
 <img src="https://tettra.co/culture-codes/wp-content/logos/github.png" width="300"></br>
+<img src="https://funthon.files.wordpress.com/2017/05/bs.png?w=1200" width="300">
