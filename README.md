@@ -88,15 +88,12 @@ The repository has the following structure.
 ├── README.md
 └── src
     ├── app.py
-    ├── FUNCTIONS.pyc
     ├── GET_RESULTS.py
     ├── GET_SEARCH_URL.py
     ├── header_list.py
     ├── INITIAL_SCRAPPER_FUNCTIONS.py
     ├── LIST_DF_FUNCTIONS.py
     ├── Main_prog.ipynb
-    ├── PARSER_FUNCTIONS.py
-    ├── proxies_list.py
     ├── Not in use
     │   ├── app.ipynb
     │   ├── old_commands.py
@@ -105,21 +102,10 @@ The repository has the following structure.
     │   ├── proxie_check.py
     │   ├── unused_commands.py
     │   └── url_gen.py
-    ├── proxies_list.pyc
-    ├── __pycache__
-    │   ├── FUNCTIONS.cpython-36.pyc
-    │   ├── GET_RESULTS.cpython-36.pyc
-    │   ├── GET_SEARCH_URL.cpython-36.pyc
-    │   ├── header_list.cpython-36.pyc
-    │   ├── INITIAL_SCRAPPER_FUNCTIONS.cpython-36.pyc
-    │   ├── LIST_DF_FUNCTIONS.cpython-36.pyc
-    │   ├── MAIN_FUNCTIONS.cpython-36.pyc
-    │   ├── moduletest.pyc
-    │   ├── PARSER_FUNCTIONS.cpython-36.pyc
-    │   ├── proxie_check.cpython-36.pyc
-    │   ├── proxies_list.cpython-36.pyc
-    │   ├── SCRAPPER_FUNCTIONS.cpython-36.pyc
-    │   └── SEARCH_URL_GEN.cpython-36.pyc
+    ├── PARSER_FUNCTIONS.py
+    ├── proxies_list.py
+    ├── redfin_scrapper.ipynb
+    ├── SEARCH_URL_GEN.py
     └── Tester_file.ipynb
 ```
 
