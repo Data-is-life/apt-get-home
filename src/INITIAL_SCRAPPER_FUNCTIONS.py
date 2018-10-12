@@ -23,7 +23,7 @@ from itertools import cycle
 def session_creator(ua, url):
 
     header = random.sample(ua, 1)[0]
-
+    session.proxies = {"http": proxy, "https": proxy}
     session = requests.Session()
     # session.proxies = {"http": proxy, "https": proxy}
     req = session.get(url, headers=header)
@@ -132,7 +132,7 @@ def links_for_props(proxies, url_list, main_df, ua):
 
     proxy = random.sample(proxies, 1)[0]
     print(f'proxy number: {proxy}')
-
+    
     i = randint(0, (len(url_list) // 2))
     print(f'starting from url number: {i}')
 
