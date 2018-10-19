@@ -18,9 +18,11 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 from itertools import cycle
 
-''' Simple program to create a BeautifulSoup session'''
+
 
 def session_creator(ua, url, proxy):
+
+	'''This function is used to create a session to get data from a website. Proxies are used so the user's IP address is masked.'''
 
     header = random.sample(ua, 1)[0]
     session = requests.Session()
@@ -31,10 +33,12 @@ def session_creator(ua, url, proxy):
 
     return soup
 
-'''Checking if the proxies in the list are valid'''
+
 
 def proxie_check(proxies):
 
+	'''This function connects to a website that checks and if the proxies in the list are working.'''
+	
     default_list = []
     url = 'https://httpbin.org/ip'
 
@@ -59,10 +63,11 @@ def proxie_check(proxies):
 
     return proxies
 
-''' This will be used later to collect data to run feature importance when it
-comes to pricing homes'''
+
 
 def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
+
+	'''This will be used later to collect the number of properties per zip code. This will be necessary since the majority of the sites limit the number of properties between 350 and 500 per search. If we find the number of properties is more than the website will allow per search, we have to add an additional filter (max sqft, price, etc.) to narrow the results per search. This runs well. Not being used currently. This will be used to run feature importance when it comes to pricing homes.'''
 
     proxy = random.sample(proxies, 1)[0]
 
@@ -73,7 +78,7 @@ def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
 
         url = 'https://www.redfin.com/zipcode/' + \
             str(num) + '/filter/property-type=house+condo+townhouse,' + \
-            'include=sold-1yr,min-price=100k,min-baths=1,include=sold-1yr'
+            'include=sold-1yr,min-price=20k,min-baths=1,include=sold-1yr'
 
         try:
 
@@ -103,9 +108,11 @@ def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
 
     return prp_list, zip_list, proxies, ezl
 
-''' This is used to get homes addresses and url from the search page'''
+
 
 def each_page(proxy, ua, url):
+
+	'''Once we start running the search, the search page displays only home's basic features. This function collects homes information (home addresses and home URLs) from the search result page.'''
 
     soup = session_creator(proxy, ua, url)
 
@@ -124,10 +131,11 @@ def each_page(proxy, ua, url):
 
     return df
 
-''' This will be used later to collect data to run feature importance when it
-comes to pricing homes'''
+
 
 def links_for_props(proxies, url_list, main_df, ua):
+
+	'''After collecting all the properties' URLs, this function runs each property URL and parses information from it.''''
 
     proxy = random.sample(proxies, 1)[0]
     print(f'proxy number: {proxy}')
