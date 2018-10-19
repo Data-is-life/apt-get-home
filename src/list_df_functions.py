@@ -4,14 +4,13 @@
 
 import re
 import sys
-import random
-import string
 import pandas as pd
 
-''' This will be used later to collect data to run feature importance when it
-comes to pricing homes'''
 
 def strip_count(lst):
+    ''' This will be used later to collect data to run feature importance when it
+    comes to pricing homes'''
+
     rx_num_homes = r'\d+\shomes'
     rx_zip = r'\d+\sat'
     rx_median = r'\$\d+\.?\w+'
@@ -50,10 +49,11 @@ def strip_count(lst):
         data={'zip': zip_list, 'median_price': median_list, 'num_ap_homes': num_homes_list})
     return df
 
-''' This will be used later to collect data to run feature importance when it
-comes to pricing homes'''
 
 def gen_url_list(zip_list):
+    ''' This will be used later to collect data to run feature importance when it
+    comes to pricing homes'''
+
     active_url_list = []
     sold_url_list = []
     for num in zip_list:

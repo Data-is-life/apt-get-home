@@ -4,16 +4,8 @@
 
 
 import re
-import urllib
-import random
-import requests
 import pandas as pd
-import numpy as np
 from bs4 import BeautifulSoup
-from selenium.webdriver.firefox.webdriver import FirefoxProfile
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError, URLError
-from header_list import user_agent_list
 from initial_scrapper_functions import *
 from parser_functions import *
 from list_df_functions import *
@@ -27,15 +19,15 @@ def gen_last_part_url(customer_df):
     yr_range_to_check = list(range(1800, 2050))
     yr_range_to_check = [str(num) for num in yr_range_to_check]
 
-    '''Converting zip code to an int, to make sure it is valid'''
+    # Converting zip code to an int, to make sure it is valid
 
     zip_code = int(customer_df['zip_code'][1])
 
-    '''Cleaning city name if we need to do a search with it'''
+    # Cleaning city name if we need to do a search with it
 
     city = customer_df['city'][1].replace(',', '')
 
-    '''Making sure the type of home is used for better results'''
+    # Making sure the type of home is used for better results
 
     if 'prop_type' in customer_df.columns:
         type_home = customer_df['prop_type'][1]
@@ -60,7 +52,7 @@ def gen_last_part_url(customer_df):
     else:
         price = 0
 
-    '''Making sure we have the right bathroom count'''
+    # Making sure we have the right bathroom count
 
     if customer_df['num_bdrs'][1] in num_range_to_check:
         num_bds = float(customer_df['num_bdrs'][1])
@@ -69,7 +61,7 @@ def gen_last_part_url(customer_df):
     else:
         num_bds = -1
 
-    '''Making sure we have the right bathroom count'''
+    # Making sure we have the right bathroom count
 
     if customer_df['num_bts'][1] != '-':
         num_bths = float(customer_df['num_bts'][1])
@@ -80,7 +72,7 @@ def gen_last_part_url(customer_df):
 
     sqft = float(customer_df['sq_ft'][1].replace(',', '').replace(' ', ''))
 
-    '''Getting year built from the home'''
+    # Getting year built from the home
 
     if ('year_built' in customer_df.columns and customer_df['year_built'][1] in yr_range_to_check):
         yr_blt = float(customer_df['year_built'][1])
@@ -89,7 +81,7 @@ def gen_last_part_url(customer_df):
     else:
         yr_blt = 9999
 
-    '''Lot size getting converted to sqft and float'''
+    # Lot size getting converted to sqft and float
 
     lot_sqft = customer_df['lot_size'][1].replace(
         ',', '').replace(' ', '').replace('—', '0')
@@ -107,7 +99,7 @@ def gen_last_part_url(customer_df):
     else:
         lot_sqft = int(''.join(num for num in re.findall(r'\d', lot_sqft)))
 
-    '''Checking to see if there is any HOA fees'''
+    # Checking to see if there is any HOA fees
 
     if 'hoa_fees' in customer_df.columns:
         hoa_fee = float(customer_df['hoa_fees'].values)
@@ -115,7 +107,7 @@ def gen_last_part_url(customer_df):
     else:
         url_part_nine = ''
 
-    '''Putting them all together'''
+    # Putting them all together
 
     url_part_two = ',' + search_url_part_two_gen(type_home)
     if len(url_part_two) <= 2:
