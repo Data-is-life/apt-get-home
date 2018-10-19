@@ -20,11 +20,11 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 from itertools import cycle
 from header_list import user_agent_list
-from INITIAL_SCRAPPER_FUNCTIONS import *
-from PARSER_FUNCTIONS import *
-from LIST_DF_FUNCTIONS import *
-from SEARCH_URL_GEN import *
-from GET_SEARCH_URL import *
+from initial_scrapper_functions import *
+from parser_functions import *
+from list_df_functions import *
+from search_url_gen import *
+from get_search_url import *
 
 ua = user_agent_list
 

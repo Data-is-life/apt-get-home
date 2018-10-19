@@ -4,11 +4,13 @@
 
 import re
 
-'''Generating part one of the search URL that matches the property type to the
-user interested in'''
-
 def search_url_part_two_gen(type_home):
 
+	'''Generating part one of the search URL: Property Type
+	This function finds certain mixture of words in the type of property that
+	the user likes and creates a part of the url that has property type to 
+	the	one that the user is interested in'''
+	
     if ('Condo' in type_home or 'Town' in type_home):
         url = 'property-type=condo+townhouse'
     elif 'Single' in type_home:
@@ -18,9 +20,15 @@ def search_url_part_two_gen(type_home):
 
     return url
 
-'''generating part three of the search URL that matches the users price range'''
 
 def search_url_part_three_gen(price):
+	
+	'''Generating part three of the search URL.
+	The third part of the url is price range. Redfin has limited options when
+	it comes to setting price range. Therefore, I used if statements
+	throughout to determine the price range of  url. I would modify this completely to have
+	the price range 
+	that the user '''
 
     if price > 12000000:
         url = 'min-price=6M'
