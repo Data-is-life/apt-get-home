@@ -30,9 +30,9 @@ ua = user_agent_list
 
 header = random.sample(ua, 1)[0]
 
-''' This is used to collect number of homes that matched users interest'''
 
 def prop_count_(soup):
+    ''' This is used to collect number of homes that matched users interest'''
 
     all_count = soup.findAll('div', {'class': 'homes summary'})
     if len(str(all_count)) >= 20:
@@ -41,9 +41,9 @@ def prop_count_(soup):
     else:
         print('Error on Page. Please try running it again.')
 
-''' This is used to get results from the search pages'''
 
 def props_from_search_page(soup):
+    ''' This is used to get results from the search pages'''
 
     full_soup = soup.findAll('a', {'class': 'bottom link-override'})
 
@@ -57,9 +57,8 @@ def props_from_search_page(soup):
     return df
 
 
-'''This is used to run the search and display results'''
-
 def get_results(soup, customer_df):
+    '''This is used to run the search and display results'''
 
     print(f'Found {prop_count_(soup)} properties')
 
@@ -77,8 +76,9 @@ def get_results(soup, customer_df):
     elif 'captcha' in soup.text:
         print("Getting captcha from Redfin")
     else:
-        print ("Didn't find anything similar in the same zip code")
-        customer_response = input("Would you like to search the entire city? (y or n): ")
+        print("Didn't find anything similar in the same zip code")
+        customer_response = input(
+            "Would you like to search the entire city? (y or n): ")
         if customer_response.lower() == 'y':
             city_url = gen_city_url(customer_df)
             soup_ = session_creator(ua, city_url)
@@ -97,4 +97,5 @@ def get_results(soup, customer_df):
             elif 'captcha' in soup_.text:
                 print("Getting captcha from Redfin")
             else:
-                print ("Didn't find anything similar in the same city either. I'm working on improving your next experience")
+                print(
+                    "Didn't find anything similar in the same city either. I'm working on improving your next experience")

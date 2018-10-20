@@ -1,5 +1,8 @@
-from math import ceil
-import time, re, ast, sys, urllib, random, string, requests
+import sys
+import urllib
+import random
+import string
+import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
@@ -31,11 +34,11 @@ soup = session_creator(ua, url, proxy)
 
 customer_df = info_from_property(soup)
 
-print (customer_df.T)
+print(customer_df.T)
 
 c_url = gen_zip_url(customer_df)
 
 header = random.sample(ua, 1)[0]
 soup_ = session_creator(ua, c_url, proxy)
 
-print (get_results(soup_, customer_df))
+print(get_results(soup_, customer_df))

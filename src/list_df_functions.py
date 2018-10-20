@@ -3,13 +3,12 @@
 # Date: 09/27/2018
 
 import re
-import sys
 import pandas as pd
 
 
 def strip_count(lst):
-    ''' This will be used later to collect data to run feature importance when it
-    comes to pricing homes'''
+    ''' This will be used later to collect data to run feature importance when
+    it comes to pricing homes'''
 
     rx_num_homes = r'\d+\shomes'
     rx_zip = r'\d+\sat'
@@ -46,7 +45,8 @@ def strip_count(lst):
                       for num in num_homes_list]
 
     df = pd.DataFrame(
-        data={'zip': zip_list, 'median_price': median_list, 'num_ap_homes': num_homes_list})
+        data={'zip': zip_list, 'median_price': median_list,
+              'num_ap_homes': num_homes_list})
     return df
 
 

@@ -34,15 +34,15 @@ def gen_last_part_url(customer_df):
     elif 'type' in customer_df.columns:
         type_home = customer_df['type'][1]
     else:
-        type = ''
+        type_home = ''
 
     '''Using the Redfin Estimate first to determine the price range of the search,
-    follwed by last sold price, if they property is sold, or listing price if the
+    follwed by last sold price, if the property is sold, or listing price if the
     property is active or pending. '''
 
     if 'red_est' in customer_df.columns:
-         price = float(customer_df['red_est'][
-             1].replace('$', '').replace(',', ''))
+        price = float(customer_df['red_est'][
+            1].replace('$', '').replace(',', ''))
     elif 'last_sold_price' in customer_df.columns:
         price = float(customer_df['last_sold_price'][
             1].replace('$', '').replace(',', ''))
@@ -146,7 +146,8 @@ def gen_last_part_url(customer_df):
 
 def gen_zip_url(customer_df):
     zip_code = int(customer_df['zip_code'][1])
-    url_part_one = 'https://www.redfin.com/zipcode/' + str(zip_code) + '/filter/sort=lo-days'
+    url_part_one = 'https://www.redfin.com/zipcode/' + \
+        str(zip_code) + '/filter/sort=lo-days'
     last_part_url = gen_last_part_url(customer_df)
     url = url_part_one + last_part_url
     return url

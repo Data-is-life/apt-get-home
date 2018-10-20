@@ -4,13 +4,13 @@
 
 import re
 
-def search_url_part_two_gen(type_home):
 
-	'''Generating part one of the search URL: Property Type
-	This function finds certain mixture of words in the type of property that
-	the user likes and creates a part of the url that has property type to 
-	the	one that the user is interested in'''
-	
+def search_url_part_two_gen(type_home):
+    '''Generating part one of the search URL: Property Type
+    This function finds certain mixture of words in the type of property that
+    the user likes and creates a part of the url that has property type to
+    the one that the user is interested in'''
+
     if ('Condo' in type_home or 'Town' in type_home):
         url = 'property-type=condo+townhouse'
     elif 'Single' in type_home:
@@ -22,17 +22,15 @@ def search_url_part_two_gen(type_home):
 
 
 def search_url_part_three_gen(price):
-	
-	'''Generating part three of the search URL.
-	The third part of the url is price range. Redfin has limited options when
-	it comes to setting price range. Therefore, I used if statements
-	throughout to determine the price range of  url. I would modify this completely to have
-	the price range 
-	that the user '''
+    '''Generating part three of the search URL.
+    The third part of the url is price range. Redfin has limited options when
+    it comes to setting price range. Therefore, I used if statements
+    throughout to determine the price range of  url. I would modify this
+    completely to have the price range that the user '''
 
     if price > 12000000:
         url = 'min-price=6M'
-    elif price >=80000000:
+    elif price >= 80000000:
         url = 'min-price=5M'
     elif price >= 7000000:
         url = 'min-price=4.5M,max-price=10M'
@@ -124,7 +122,7 @@ def search_url_part_three_gen(price):
         url = 'min-price=50k,max-price=125k'
     elif price >= 75000:
         url = 'max-price=125k'
-    elif price >=35000:
+    elif price >= 35000:
         url = 'max-price=75k'
     elif (price > 1 and price < 35000):
         url = 'max-price=50k'
@@ -133,23 +131,24 @@ def search_url_part_three_gen(price):
 
     return url
 
-'''generating part four of the search URL that matches the users preference
-for number of bedrooms'''
 
 def search_url_part_four_gen(num_bds):
+    '''Generating part four of the search URL that matches the users preference
+    for number of bedrooms'''
+
     if num_bds > 10:
         url = 'min-beds=6'
     elif num_bds >= 8:
         url = 'min-beds=5'
     elif num_bds >= 5:
         url = 'min-beds=4'
-    elif num_bds >=4:
+    elif num_bds >= 4:
         url = 'min-beds=3,max-beds=6'
     elif num_bds >= 3:
         url = 'min-beds=2,max-beds=4'
     elif num_bds >= 2:
         url = 'min-beds=1,max-beds=3'
-    elif num_bds >=1:
+    elif num_bds >= 1:
         url = 'max-beds=2'
     if num_bds == 0:
         url = 'max-beds=1'
@@ -158,10 +157,10 @@ def search_url_part_four_gen(num_bds):
 
     return url
 
-'''Generating part five of the search URL that matches the users preference
-for number of bathrooms'''
 
 def search_url_part_five_gen(num_bths):
+    '''Generating part five of the search URL that matches the users preference
+    for number of bathrooms'''
 
     if num_bths >= 10:
         url = 'min-baths=6'
@@ -180,10 +179,10 @@ def search_url_part_five_gen(num_bths):
 
     return url
 
-'''Generating part six of the search URL that matches the users preference
-for size of the home'''
 
 def search_url_part_six_gen(sqft):
+    '''Generating part six of the search URL that matches the users preference
+    for size of the home'''
 
     if sqft >= 10050:
         url = 'min-sqft=7.5k-sqft'
@@ -240,10 +239,10 @@ def search_url_part_six_gen(sqft):
 
     return url
 
-'''Generating part seven of the search URL that matches the users preference
-for the year the home was built in'''
 
 def search_url_part_seven_gen(yr_blt):
+    '''Generating part seven of the search URL that matches the users preference
+    for the year the home was built in'''
 
     if yr_blt >= 2018:
         url = 'min-year-built=2005'
@@ -272,10 +271,10 @@ def search_url_part_seven_gen(yr_blt):
 
     return url
 
-'''Generating part eight of the search URL that matches the users preference
-for the lot size'''
 
 def search_url_part_eight_gen(lot_sqft):
+    '''Generating part eight of the search URL that matches the users preference
+    for the lot size'''
 
     if lot_sqft >= 3000000:
         url = 'min-lot-size=40-acre'
@@ -308,11 +307,11 @@ def search_url_part_eight_gen(lot_sqft):
 
     return url
 
-'''Generating part nine of the search URL that matches the home user provided.
-This could be crucial, since the closer the search to the HOA dues, if any,
-from the home of their liking, the better the results'''
 
 def search_url_part_nine_gen(hoa_fee):
+    '''Generating part nine of the search URL that matches the home user provided.
+    This could be crucial, since the closer the search to the HOA dues, if any,
+    from the home of their liking, the better the results'''
 
     if hoa_fee >= 900:
         url = 'hoa=1000'

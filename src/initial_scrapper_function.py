@@ -14,7 +14,7 @@ from urllib.error import HTTPError, URLError
 
 
 def session_creator(ua, url, proxy):
-	'''This function is used to create a session to get data from a website.
+    '''This function is used to create a session to get data from a website.
     Proxies are used so the user's IP address is masked.'''
 
     header = random.sample(ua, 1)[0]
@@ -27,12 +27,10 @@ def session_creator(ua, url, proxy):
     return soup
 
 
-
 def proxie_check(proxies):
-
-	'''This function connects to a website that checks and if the proxies in the 
+    '''This function connects to a website that checks and if the proxies in the
     list are working.'''
-	
+
     default_list = []
     url = 'https://httpbin.org/ip'
 
@@ -44,7 +42,8 @@ def proxie_check(proxies):
         time.sleep(random.uniform(2.25, 6.5))
         start_time = time.time()
         try:
-            response = requests.get(url, proxies={"http": proxy, "https": proxy})
+            response = requests.get(
+                url, proxies={"http": proxy, "https": proxy})
             print(response.json())
             print(time.time() - start_time)
 
@@ -58,10 +57,8 @@ def proxie_check(proxies):
     return proxies
 
 
-
 def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
-
-	'''This will be used later to collect the number of properties per zip code. 
+    '''This will be used later to collect the number of properties per zip code.
     This will be necessary since the majority of the sites limit the number of 
     properties between 350 and 500 per search. If we find the number of properties 
     is more than the website will allow per search, we have to add an additional 
@@ -109,10 +106,8 @@ def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
     return prp_list, zip_list, proxies, ezl
 
 
-
 def each_page(proxy, ua, url):
-
-	'''Once we start running the search, the search page displays only home's 
+    '''Once we start running the search, the search page displays only home's 
     basic features. This function collects homes information (home addresses 
     and home URLs) from the search result page.'''
 
@@ -134,15 +129,13 @@ def each_page(proxy, ua, url):
     return df
 
 
-
 def links_for_props(proxies, url_list, main_df, ua):
-
-	'''After collecting all the properties' URLs, this function runs each 
+    '''After collecting all the properties' URLs, this function runs each 
     property URL and parses information from it.'''
 
     proxy = random.sample(proxies, 1)[0]
     print(f'proxy number: {proxy}')
-    
+
     i = randint(0, (len(url_list) // 2))
     print(f'starting from url number: {i}')
 

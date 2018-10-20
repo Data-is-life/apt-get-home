@@ -11,28 +11,30 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
 
-''' Keeping Dataframe heading formating consistant by converting all values to
-standardized format that is easy to trace back'''
 
 def rename_columns(strs_to_replace):
+    ''' Keeping Dataframe heading formating consistant by converting all values
+    to standardized format that is easy to trace back'''
+
     modified_list = []
+
     for num in strs_to_replace:
         modified_list.append(num.replace('Redfin Estimate', 'redfin_est').replace(
             'Beds', 'num_bdrs').replace('beds', 'num_bts').replace(
             'Baths', 'num_bts').replace('$', 'price').replace(
             'Built: ', 'yr_blt').lower().replace('__', '_').replace(
-            ' ', '_').replace(':_', '').replace(':', '').replace('.', '').replace(
-            'sqft', 'sq_ft').replace('_(', '_').replace('(', '_').replace(
-            ')', '').replace(',', '').replace('minimum', 'min').replace(
-            'maximum', 'max').replace('bedrooms', 'beds').replace(
-            'bathrooms', 'baths').replace('#_of_', 'num_').replace(
-            'sq. ft.', 'sqft'))
+            ' ', '_').replace(':_', '').replace(':', '').replace(
+            '.', '').replace('sqft', 'sq_ft').replace('_(', '_').replace(
+            '(', '_').replace(')', '').replace(',', '').replace(
+            'minimum', 'min').replace('maximum', 'max').replace(
+            'bedrooms', 'beds').replace('bathrooms', 'baths').replace(
+            '#_of_', 'num_').replace('sq. ft.', 'sqft'))
+
     return modified_list
 
 
-'''Starting with getting the information at the very top of the page'''
-
 def top_info_parser(soup):
+    '''Starting with getting the information at the very top of the page'''
 
     all_top = soup.findAll('div', {'class': 'HomeInfo inline-block'})
 
@@ -114,10 +116,10 @@ def top_info_parser(soup):
     return all_info_dict
 
 
-'''Getting information from tax sources to ensure all the home information
-matches from Zillow, Agent, and Tax records'''
-
 def public_info_parser(soup):
+    '''Getting information from tax sources to ensure all the home information
+    matches from Zillow, Agent, and Tax records'''
+
     all_info = soup.findAll('div', {'data-rf-test-id': 'publicRecords'})
 
     label_list = []
@@ -137,11 +139,12 @@ def public_info_parser(soup):
 
     return public_info_dict
 
-''' Getting schools and the grades they attend with their score from
-GreatSchools this will be added as a feature for homes bigger than
-three bedrooms and all single family homes.'''
 
 def school_parser(soup):
+    ''' Getting schools and the grades they attend with their score from
+    GreatSchools this will be added as a feature for homes bigger than
+    three bedrooms and all single family homes.'''
+
     school_dict = {}
     school_info = soup.findAll('div', {'class': "name-and-info"})
     school_names = []
@@ -215,9 +218,9 @@ def school_parser(soup):
 
     return school_dict
 
-''' All the listed features by the broker inputting the listing on the MLS'''
 
 def feats_parser(soup):
+    ''' All the listed features by the broker inputting the listing on the MLS'''
 
     all_home_feats = soup.findAll('span', {'class': "entryItemContent"})
 
@@ -255,7 +258,7 @@ def feats_parser(soup):
     extra_feats = [num.replace('<span>', '').replace('</span>', '').replace(
         '<a href=', '').replace('"', '').replace(' rel=nofollow', '').replace(
         ' target=_blank>', '').replace('Virtual Tour (External Link)', '').replace(
-        '</a', '').replace('>','').replace('&amp;', '&').replace('(s)','') for num
+        '</a', '').replace('>', '').replace('&amp;', '&').replace('(s)', '') for num
         in extra_feats]
 
     x_feat_string = ', '.join([num for num in extra_feats])
@@ -267,10 +270,10 @@ def feats_parser(soup):
     return feats_dict
 
 
-'''Need to get additional information, so we don't miss anything that
-could prove to be critical later'''
-
 def additional_info(soup):
+    '''Need to get additional information, so we don't miss anything that
+    could prove to be critical later'''
+
     cats_ = soup.findAll('span', {'class': re.compile('^header ')})
     cats_ = [num.text for num in cats_]
     vals_ = soup.findAll('span', {'class': re.compile('^content ')})
@@ -279,20 +282,21 @@ def additional_info(soup):
     cats_ = [str(num).replace('Property Type', 'prop_type').replace(
         'HOA Dues', 'hoa_fees').replace('Type', 'prop_type') for num in cats_]
     vals_ = [str(num).replace('$', '').replace('/month', '').replace(
-        'Hi-Rise', 'Condo').replace('Residential','Single Family Residence') for num in vals_]
+        'Hi-Rise', 'Condo').replace('Residential', 'Single Family Residence')
+        for num in vals_]
 
     return dict(zip(cats_, vals_))
 
-''' Putting all the information together in a Dataframe and removing any
-duplicate columns.'''
 
 def info_from_property(soup):
+    ''' Putting all the information together in a Dataframe and removing any
+    duplicate columns.'''
 
     top_info_dict = top_info_parser(soup)
     public_info_dict = public_info_parser(soup)
     school_dict = school_parser(soup)
     all_home_feats = feats_parser(soup)
-    mid_info_feats =  additional_info(soup)
+    mid_info_feats = additional_info(soup)
 
     df1 = pd.DataFrame(top_info_dict, index=[1])
     df2 = pd.DataFrame(public_info_dict, index=[1])
