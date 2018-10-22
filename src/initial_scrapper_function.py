@@ -130,8 +130,8 @@ def each_page(proxy, ua, url):
 
 
 def links_for_props(proxies, url_list, main_df, ua):
-    '''After collecting all the properties' URLs, this function runs each 
-    property URL and parses information from it.'''
+    '''After collecting all the search page's URLs, this function runs each 
+    URL and parses all homes address and URL from every single search page's.'''
 
     proxy = random.sample(proxies, 1)[0]
     print(f'proxy number: {proxy}')

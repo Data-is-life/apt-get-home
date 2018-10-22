@@ -8,8 +8,11 @@ import pandas as pd
 
 def strip_count(lst):
     ''' This will be used later to collect data to run feature importance when
-    it comes to pricing homes'''
-
+    it comes to pricing homes.
+    Redfin has a portion at the bottom of every result page that gives out median
+    price of the homes in the area searched. This is jut to compare home value of 
+    different areas.'''
+    
     rx_num_homes = r'\d+\shomes'
     rx_zip = r'\d+\sat'
     rx_median = r'\$\d+\.?\w+'
@@ -51,8 +54,12 @@ def strip_count(lst):
 
 
 def gen_url_list(zip_list):
-    ''' This will be used later to collect data to run feature importance when it
-    comes to pricing homes'''
+    ''' This will be used later to collect data to run feature importance when 
+    it comes to pricing homes.
+    For every single zip code, this function collects the urls for all the 
+    properties on the first page by going through all type of homes and 
+    sold homes. This is only to get the features of the homes in a specified area,
+    since the features of the homes differ from area to area.'''
 
     active_url_list = []
     sold_url_list = []
