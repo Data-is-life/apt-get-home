@@ -12,7 +12,7 @@ from urllib.error import HTTPError, URLError
 from itertools import cycle
 from header_list import user_agent_list
 from proxies_list import proxies_list_
-from initial_scrapper_functions import *
+from initial_scrapper_function import *
 from parser_functions import *
 from list_df_functions import *
 from search_url_gen import *

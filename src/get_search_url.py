@@ -6,7 +6,7 @@
 import re
 import pandas as pd
 from bs4 import BeautifulSoup
-from initial_scrapper_functions import *
+from initial_scrapper_function import *
 from parser_functions import *
 from list_df_functions import *
 from search_url_gen import *
