@@ -27,7 +27,6 @@ from search_url_gen import *
 from get_search_url import *
 
 ua = user_agent_list
-
 header = random.sample(ua, 1)[0]
 
 

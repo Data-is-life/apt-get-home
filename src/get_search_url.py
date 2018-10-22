@@ -36,9 +36,9 @@ def gen_last_part_url(customer_df):
     else:
         type_home = ''
 
-    '''Using the Redfin Estimate first to determine the price range of the search,
-    follwed by last sold price, if the property is sold, or listing price if the
-    property is active or pending. '''
+    '''Using the Redfin Estimate first to determine the price range of 
+    the search, follwed by last sold price, if the property is sold, or 
+    listing price if the property is active or pending. '''
 
     if 'red_est' in customer_df.columns:
         price = float(customer_df['red_est'][
@@ -70,13 +70,16 @@ def gen_last_part_url(customer_df):
     else:
         num_bths = -1
 
-    sqft = float(customer_df['sq_ft'][1].replace(',', '').replace(' ', ''))
+    sqft = float(customer_df['sq_ft'][1].replace(',', '').replace(
+        ' ', ''))
 
     # Getting year built from the home
 
-    if ('year_built' in customer_df.columns and customer_df['year_built'][1] in yr_range_to_check):
+    if ('year_built' in customer_df.columns and customer_df[
+        'year_built'][1] in yr_range_to_check):
         yr_blt = float(customer_df['year_built'][1])
-    elif ('built' in customer_df.columns and customer_df['built'][1] in yr_range_to_check):
+    elif ('built' in customer_df.columns and customer_df[
+        'built'][1] in yr_range_to_check):
         yr_blt = float(customer_df['built'][1])
     else:
         yr_blt = 9999
@@ -90,10 +93,12 @@ def gen_last_part_url(customer_df):
         lot_sqft = int(''.join(num for num in re.findall(r'\d', lot_sqft)))
     elif ('ac' in lot_sqft or 're' in lot_sqft):
         lot_sqft = int(
-            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?', lot_sqft))) * 43560)
+            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?', 
+                                                    lot_sqft))) * 43560)
     elif (float(lot_sqft) > 0 and float(lot_sqft) < 10):
         lot_sqft = int(
-            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?', lot_sqft))) * 43560)
+            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?', 
+                                                    lot_sqft))) * 43560)
     elif '—' in lot_sqft:
         lot_sqft = 0
     else:
@@ -134,7 +139,8 @@ def gen_last_part_url(customer_df):
         url_part_seven = ''
 
     url_part_eight = ',' + search_url_part_eight_gen(lot_sqft)
-    if (len(url_part_eight) <= 1 or (type_home == re.compile('^Cond') or type_home == re.compile('^Town'))):
+    if (len(url_part_eight) <= 1 or (type_home == re.compile(
+        '^Cond') or type_home == re.compile('^Town'))):
         url_part_eight = ''
 
     last_part_url = url_part_two + url_part_three + \
@@ -145,6 +151,8 @@ def gen_last_part_url(customer_df):
 
 
 def gen_zip_url(customer_df):
+    '''This generates the url for the zip code'''
+    
     zip_code = int(customer_df['zip_code'][1])
     url_part_one = 'https://www.redfin.com/zipcode/' + \
         str(zip_code) + '/filter/sort=lo-days'
@@ -154,6 +162,9 @@ def gen_zip_url(customer_df):
 
 
 def gen_city_url(customer_df):
+    '''If not enough properties are found in the same zip code, this is
+    an option to run search on the whole city.'''
+    
     city = customer_df['city'][1].replace(',', '').replace(' ', '-')
     if city[-1] == '-':
         city = city[:-1]
