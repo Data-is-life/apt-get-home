@@ -62,6 +62,10 @@ The repository has the following structure.
 
 ```
 ├── Data
+│   ├── active_props_url_list.csv
+│   ├── act_pend_by_city.csv
+│   ├── all_all_info.csv
+│   ├── city_url_search_list.csv
 │   ├── features_review.ods
 │   └── url_ranges.ods
 ├── img
@@ -88,11 +92,11 @@ The repository has the following structure.
 ├── README.md
 └── src
     ├── app.py
-    ├── GET_RESULTS.py
-    ├── GET_SEARCH_URL.py
+    ├── get_results.py
+    ├── get_search_url.py
     ├── header_list.py
-    ├── INITIAL_SCRAPPER_FUNCTIONS.py
-    ├── LIST_DF_FUNCTIONS.py
+    ├── initial_scrapper_function.py
+    ├── list_df_functions.py
     ├── Main_prog.ipynb
     ├── Not in use
     │   ├── app.ipynb
@@ -102,11 +106,8 @@ The repository has the following structure.
     │   ├── proxie_check.py
     │   ├── unused_commands.py
     │   └── url_gen.py
-    ├── PARSER_FUNCTIONS.py
+    ├── parser_functions.py
     ├── proxies_list.py
-    ├── redfin_scrapper.ipynb
-    ├── SEARCH_URL_GEN.py
-    └── Tester_file.ipynb
 ```
 
 ## Resources used:
@@ -118,3 +119,16 @@ The repository has the following structure.
 <img src="https://bids.berkeley.edu/sites/default/files/styles/400x225/public/projects/numpy_project_page.jpg?itok=flrdydei" width="300"></br>
 <img src="https://tettra.co/culture-codes/wp-content/logos/github.png" width="300"></br>
 <img src="https://funthon.files.wordpress.com/2017/05/bs.png?w=1200" width="300">
+
+
+```
+Copyright (c) 2018, Mohit Gangwani
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+```
