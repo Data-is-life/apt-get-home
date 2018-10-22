@@ -13,8 +13,10 @@ from random import randint
 
 
 def rename_columns(strs_to_replace):
-    ''' Keeping Dataframe heading formating consistant by converting all values
-    to standardized format that is easy to trace back'''
+    '''Keeping Dataframe heading formating consistant by converting all values
+    to standardized format that is easy to trace back. If left unformatted, 
+    there could be duplicate columns with the same values and it would make it
+    far more challenging to search for homes.'''
 
     modified_list = []
 
@@ -34,7 +36,9 @@ def rename_columns(strs_to_replace):
 
 
 def top_info_parser(soup):
-    '''Starting with getting the information at the very top of the page'''
+    '''Starting with getting the information at the very top of the page.
+    This takes information from the top of the page that highlights the main
+    attributes of the home, including latitude and longitude.'''
 
     all_top = soup.findAll('div', {'class': 'HomeInfo inline-block'})
 
@@ -45,43 +49,57 @@ def top_info_parser(soup):
     lat_lon = []
 
     for num in all_top:
-
+        
+        # Getting the address
         address_ = num.findAll('span', {'class': 'street-address'})
         top_info_dict['address'] = [num.text for num in address_][0]
-
+        
+        # Getting the city
         city_ = num.findAll('span', {'class': 'locality'})
         top_info_dict['city'] = [num.text for num in city_][0]
 
+        # Getting the state (maybe not needed?)
         state_ = num.findAll('span', {'class': 'region'})
         top_info_dict['state'] = [num.text for num in state_][0]
 
+        # Getting the zip-code
         zip_code_ = num.findAll('span', {'class': 'postal-code'})
         top_info_dict['zip_code'] = [num.text for num in zip_code_][0]
 
+        '''Getting the Redfin Estimate. This is important, since if the home
+        was sold a few months ago, the search should focus on the homes current
+        value and not for what it sold for. This make the results far more
+        efficiant.'''
         red_est = num.findAll('div', {'class': 'info-block avm'})
         for i in red_est:
             values_.append(i.div.text)
             cats_.append(i.span.text)
-
+        
+        # If the Redfin estimate is not available, this is the fall back option.
         price_ = num.findAll('div', {'class': 'info-block price'})
         for i in price_:
             values_.append(i.div.text)
             cats_.append(i.span.text)
+            
 
+        # Getting number of bedrooms
         bdrs_ = num.findAll('div', {'data-rf-test-id': 'abp-beds'})
         for i in bdrs_:
             values_.append(i.div.text)
             cats_.append(i.span.text)
-
+            
+        # Getting number of bathrooms
         bths_ = num.findAll('div', {'data-rf-test-id': 'abp-baths'})
         for i in bths_:
             values_.append(i.div.text)
             cats_.append(i.span.text)
-
+        
+        # Getting size of the home
         sqft_ = num.findAll('div', {'data-rf-test-id': 'abp-sqFt'})
         for i in sqft_:
             top_info_dict['sqft'] = i.span.text[:6]
 
+        # Getting the year the home was built in
         yrblt_ = num.findAll('div', {'class': 'HomeBottomStats'})
         for i in yrblt_:
             lbls_ = i.findAll('span', {'class': 'label'})
@@ -90,7 +108,8 @@ def top_info_parser(soup):
                 cats_.append(j.text)
             for k in vals_:
                 values_.append(k.text)
-
+                
+        # Getting latitude and longitude of the home
         lat_lon_ = num.findAll('span', {'itemprop': 'geo'})
         for i in lat_lon_:
             ll_ = i.findAll('meta')
@@ -101,12 +120,18 @@ def top_info_parser(soup):
         top_info_dict['latitude'] = lat_lon[0]
         top_info_dict['longitude'] = lat_lon[1]
 
+    # Checking to make sure the values are present for the fields
+    # If they are not avaialble, get rid of them.
     values_ = [num for num in values_ if num != '—']
     cats_ = [num for num in cats_ if num != '—']
+    
+    # Putting everything in a dictionary, since it removes redundant columns
     info_dict = dict(zip(cats_, values_))
 
+    # Merging the two dictionaries
     all_info_dict = {**top_info_dict, **info_dict}
 
+    # Getting the home description
     home_description = soup.find('p', {'class': 'font-b1'})
     if home_description != None:
         all_info_dict['description'] = home_description.span.text
@@ -118,7 +143,7 @@ def top_info_parser(soup):
 
 def public_info_parser(soup):
     '''Getting information from tax sources to ensure all the home information
-    matches from Zillow, Agent, and Tax records'''
+    matches from Zillow, Agent, and Tax records.'''
 
     all_info = soup.findAll('div', {'data-rf-test-id': 'publicRecords'})
 
@@ -220,7 +245,8 @@ def school_parser(soup):
 
 
 def feats_parser(soup):
-    ''' All the listed features by the broker inputting the listing on the MLS'''
+    '''All the listed features by the agent/broker inputting the listing 
+    on the MLS.'''
 
     all_home_feats = soup.findAll('span', {'class': "entryItemContent"})
 
@@ -255,6 +281,7 @@ def feats_parser(soup):
         if num in feats_dict.keys():
             feats_dict.pop(num)
 
+    # This is to replace all the HTML tags
     extra_feats = [num.replace('<span>', '').replace('</span>', '').replace(
         '<a href=', '').replace('"', '').replace(' rel=nofollow', '').replace(
         ' target=_blank>', '').replace('Virtual Tour (External Link)', '').replace(
@@ -272,7 +299,7 @@ def feats_parser(soup):
 
 def additional_info(soup):
     '''Need to get additional information, so we don't miss anything that
-    could prove to be critical later'''
+    could prove to be critical later.'''
 
     cats_ = soup.findAll('span', {'class': re.compile('^header ')})
     cats_ = [num.text for num in cats_]

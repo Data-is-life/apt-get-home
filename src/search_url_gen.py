@@ -22,11 +22,11 @@ def search_url_part_two_gen(type_home):
 
 
 def search_url_part_three_gen(price):
-    '''Generating part three of the search URL.
+    '''Generating part three of the search URL: Price Range
     The third part of the url is price range. Redfin has limited options when
     it comes to setting price range. Therefore, I used if statements
     throughout to determine the price range of  url. I would modify this
-    completely to have the price range that the user '''
+    completely to have the price range that fits within users budget.'''
 
     if price > 12000000:
         url = 'min-price=6M'
@@ -133,8 +133,9 @@ def search_url_part_three_gen(price):
 
 
 def search_url_part_four_gen(num_bds):
-    '''Generating part four of the search URL that matches the users preference
-    for number of bedrooms'''
+    '''Generating part four of the search URL: Bedrooms
+    The fourth part of the url is number of bedrooms. I used if statements
+    throughout to determine the number of bedrooms for the url.'''
 
     if num_bds > 10:
         url = 'min-beds=6'
@@ -159,8 +160,9 @@ def search_url_part_four_gen(num_bds):
 
 
 def search_url_part_five_gen(num_bths):
-    '''Generating part five of the search URL that matches the users preference
-    for number of bathrooms'''
+    '''Generating part five of the search URL: Bathrooms
+    The fifth part of the url is number of bathrooms. I used if statements
+    throughout to determine the number of bathrooms for the url.'''
 
     if num_bths >= 10:
         url = 'min-baths=6'
@@ -181,8 +183,12 @@ def search_url_part_five_gen(num_bths):
 
 
 def search_url_part_six_gen(sqft):
-    '''Generating part six of the search URL that matches the users preference
-    for size of the home'''
+    '''Generating part six of the search URL: Size of the home
+    The sixth part of the url is size of the home in sqft. Redfin has 
+    limited options when it comes to setting size of the home. Therefore, 
+    I used if statements throughout to determine the sixth part of the url.
+    I would modify this completely with the price range, to have the size of
+    the home that fits within users desired preference.'''
 
     if sqft >= 10050:
         url = 'min-sqft=7.5k-sqft'
@@ -241,8 +247,12 @@ def search_url_part_six_gen(sqft):
 
 
 def search_url_part_seven_gen(yr_blt):
-    '''Generating part seven of the search URL that matches the users preference
-    for the year the home was built in'''
+    '''Generating part seven of the search URL: Year Built
+    The seventh part of the url is the year the home was built in. 
+    This is a bit tricky, since it is hard to tell if there is something in 
+    perticular user likes about the age of the home. The implementation of TFIDF
+    Vector from the description and features would make this a lot easier, since
+    the age of the home preference could be reflected in the home features.'''
 
     if yr_blt >= 2018:
         url = 'min-year-built=2005'
@@ -273,8 +283,12 @@ def search_url_part_seven_gen(yr_blt):
 
 
 def search_url_part_eight_gen(lot_sqft):
-    '''Generating part eight of the search URL that matches the users preference
-    for the lot size'''
+    '''Generating part eight of the search URL: Size of the lot
+    The eighth part of the url is the lot size in sqft. Redfin has limited 
+    options when it comes to setting lot size. Therefore, I used if statements
+    throughout to determine the eighth part of the url. I would modify this 
+    completely with the price range and size of the home, to have the lot size
+    that fits within users desired preference.'''
 
     if lot_sqft >= 3000000:
         url = 'min-lot-size=40-acre'
@@ -309,9 +323,12 @@ def search_url_part_eight_gen(lot_sqft):
 
 
 def search_url_part_nine_gen(hoa_fee):
-    '''Generating part nine of the search URL that matches the home user provided.
+    '''Generating part eight of the search URL: HOA fees
     This could be crucial, since the closer the search to the HOA dues, if any,
-    from the home of their liking, the better the results'''
+    from the home of their liking, the better the results. This would be 
+    significant if the user is looking for newer homes or a unit in a high rise,
+    since the HOA fees for those are significant and distinguish them from all
+    the other active homes.'''
 
     if hoa_fee >= 900:
         url = 'hoa=1000'
