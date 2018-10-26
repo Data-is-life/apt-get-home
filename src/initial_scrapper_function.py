@@ -31,30 +31,58 @@ def proxie_check(proxies):
     '''This function connects to a website that checks and if the proxies in the
     list are working.'''
 
-    default_list = []
+def proxie_check(proxies):
+    sprfst = []
+    fst = []
+    keep = []
+    meh = []
+    slw = []
+    snl = []
+    usls = []
     url = 'https://httpbin.org/ip'
-
-    for i in range(0, len(proxies) - 1):
-
-        print(i + 1)
-        proxy = proxies[i]
-
-        time.sleep(random.uniform(2.25, 6.5))
+    for i in range(1, (len(proxies))+1):
+        proxy = proxies[i-1]
         start_time = time.time()
         try:
             response = requests.get(
                 url, proxies={"http": proxy, "https": proxy})
-            print(response.json())
-            print(time.time() - start_time)
+            
+            total_time = time.time()-start_time
 
+            if total_time <= 1.00:
+                sprfst.append(i)
+                print(
+                    f'#{i} SUPERFAST: {total_time}')
+            elif total_time <= 3.00:
+                fst.append(i)
+                print(f'#{i} Fast: {total_time}')
+            elif total_time <= 10.00:
+                keep.append(i)
+                print(f'#{i} Keep: {total_time}')
+            elif total_time <= 15.00:
+                meh.append(i)
+                print(f'#{i} Decide: {total_time}')
+            elif total_time <= 20.00:
+                slw.append(i)
+                print(f'#{i} Slow: {total_time}')
+            else:
+                snl.append(i)
+                print(f'#{i} Snail: {total_time}')
         except:
-            print("Skipping. Connnection error")
-            print(time.time() - start_time)
-            default_list.append(i + 1)
-
-        print(default_list)
-
-    return proxies
+            total_time = time.time()-start_time
+            usls.append(i)
+            print(f'#{i} Delete: {total_time}')
+    
+    all_proxs = {}
+    all_proxs['superfast'] = sprfst
+    all_proxs['fast'] = fst
+    all_proxs['keep'] = keep
+    all_proxs['decide'] = meh
+    all_proxs['slow'] = slw
+    all_proxs['snail'] = snl
+    all_proxs['delete'] = usls
+    
+    return all_proxs
 
 
 def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
