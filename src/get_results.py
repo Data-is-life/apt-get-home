@@ -3,22 +3,8 @@
 # Date: 10/04/2018
 
 
-from math import ceil
-import time
 import re
-import ast
-import sys
-import urllib
 import random
-import string
-import requests
-import pandas as pd
-from bs4 import BeautifulSoup
-from random import randint
-from selenium.webdriver.firefox.webdriver import FirefoxProfile
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError, URLError
-from itertools import cycle
 from header_list import user_agent_list
 from initial_scrapper_function import *
 from parser_functions import *

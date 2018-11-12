@@ -2,8 +2,6 @@
 # Github: Data-is-Life
 # Date: 10/02/2018
 
-import re
-
 
 def search_url_part_two_gen(type_home):
     '''Generating part one of the search URL: Property Type
@@ -46,7 +44,7 @@ def search_url_part_three_gen(price):
         url = 'min-price=3.25M,max-price=4.5M'
     elif price >= 3500000:
         url = 'min-price=3M,max-price=4.25M'
-    elif price >= 3250000:
+    elif price >= 3250000: 
         url = 'min-price=2.75M,max-price=3.75M'
     elif price >= 3000000:
         url = 'min-price=2.25M,max-price=3.5M'
@@ -184,8 +182,8 @@ def search_url_part_five_gen(num_bths):
 
 def search_url_part_six_gen(sqft):
     '''Generating part six of the search URL: Size of the home
-    The sixth part of the url is size of the home in sqft. Redfin has 
-    limited options when it comes to setting size of the home. Therefore, 
+    The sixth part of the url is size of the home in sqft. Redfin has
+    limited options when it comes to setting size of the home. Therefore,
     I used if statements throughout to determine the sixth part of the url.
     I would modify this completely with the price range, to have the size of
     the home that fits within users desired preference.'''
@@ -248,11 +246,12 @@ def search_url_part_six_gen(sqft):
 
 def search_url_part_seven_gen(yr_blt):
     '''Generating part seven of the search URL: Year Built
-    The seventh part of the url is the year the home was built in. 
-    This is a bit tricky, since it is hard to tell if there is something in 
-    perticular user likes about the age of the home. The implementation of TFIDF
-    Vector from the description and features would make this a lot easier, since
-    the age of the home preference could be reflected in the home features.'''
+    The seventh part of the url is the year the home was built in.
+    This is a bit tricky, since it is hard to tell if there is something in
+    perticular user likes about the age of the home. The implementation of
+    TFIDF Vector from the description and features would make this easier,
+    since the age of the home preference could be reflected in the home
+    features.'''
 
     if yr_blt >= 2018:
         url = 'min-year-built=2005'
@@ -284,9 +283,9 @@ def search_url_part_seven_gen(yr_blt):
 
 def search_url_part_eight_gen(lot_sqft):
     '''Generating part eight of the search URL: Size of the lot
-    The eighth part of the url is the lot size in sqft. Redfin has limited 
+    The eighth part of the url is the lot size in sqft. Redfin has limited
     options when it comes to setting lot size. Therefore, I used if statements
-    throughout to determine the eighth part of the url. I would modify this 
+    throughout to determine the eighth part of the url. I would modify this
     completely with the price range and size of the home, to have the lot size
     that fits within users desired preference.'''
 
@@ -325,10 +324,10 @@ def search_url_part_eight_gen(lot_sqft):
 def search_url_part_nine_gen(hoa_fee):
     '''Generating part eight of the search URL: HOA fees
     This could be crucial, since the closer the search to the HOA dues, if any,
-    from the home of their liking, the better the results. This would be 
-    significant if the user is looking for newer homes or a unit in a high rise,
-    since the HOA fees for those are significant and distinguish them from all
-    the other active homes.'''
+    from the home of their liking, the better the results. This would be
+    significant if the user is looking for newer homes or a unit in a
+    high rise, since the HOA fees for those are significant and distinguish
+    them from all the other active homes.'''
 
     if hoa_fee >= 900:
         url = 'hoa=1000'

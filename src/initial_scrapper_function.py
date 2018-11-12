@@ -3,14 +3,11 @@
 # Date: 09/30/2018
 
 import time
-import urllib
 import random
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from random import randint
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError, URLError
 
 
 def session_creator(ua, url, proxy):
@@ -28,10 +25,9 @@ def session_creator(ua, url, proxy):
 
 
 def proxie_check(proxies):
-    '''This function connects to a website that checks and if the proxies in the
-    list are working.'''
+    '''This function connects to a website that checks and if the proxies in
+    the list are working.'''
 
-def proxie_check(proxies):
     sprfst = []
     fst = []
     keep = []
@@ -46,7 +42,7 @@ def proxie_check(proxies):
         try:
             response = requests.get(
                 url, proxies={"http": proxy, "https": proxy})
-            
+
             total_time = time.time()-start_time
 
             if total_time <= 1.00:
@@ -72,7 +68,7 @@ def proxie_check(proxies):
             total_time = time.time()-start_time
             usls.append(i)
             print(f'#{i} Delete: {total_time}')
-    
+
     all_proxs = {}
     all_proxs['superfast'] = sprfst
     all_proxs['fast'] = fst
@@ -81,18 +77,18 @@ def proxie_check(proxies):
     all_proxs['slow'] = slw
     all_proxs['snail'] = snl
     all_proxs['delete'] = usls
-    
+
     return all_proxs
 
 
 def zip_prop_count(zip_list, proxies, prp_list, ua, ezl):
-    '''This will be used later to collect the number of properties per zip code.
-    This will be necessary since the majority of the sites limit the number of 
-    properties between 350 and 500 per search. If we find the number of properties 
-    is more than the website will allow per search, we have to add an additional 
-    filter (max sqft, price, etc.) to narrow the results per search. This runs well. 
-    Not being used currently. This will be used to run feature importance when it 
-    comes to pricing homes.'''
+    '''This will be used later to collect the number of properties per
+    zip code. This will be necessary since the majority of the sites limit the
+    number of properties between 350 and 500 per search. If we find the number
+    of properties is more than the website will allow per search, we have to
+    add an additional filter (max sqft, price, etc.) to narrow the results per
+    search. This runs well. Not being used currently. This will be used to run
+    feature importance when it comes to pricing homes.'''
 
     proxy = random.sample(proxies, 1)[0]
 
@@ -158,8 +154,8 @@ def each_page(proxy, ua, url):
 
 
 def links_for_props(proxies, url_list, main_df, ua):
-    '''After collecting all the search page's URLs, this function runs each 
-    URL and parses all homes address and URL from every single search page's.'''
+    '''After collecting all the search page's URLs, this function runs each
+    URL and parses all homes address and URL from every single search pages.'''
 
     proxy = random.sample(proxies, 1)[0]
     print(f'proxy number: {proxy}')

@@ -1,15 +1,4 @@
-import sys
-import urllib
 import random
-import string
-import requests
-import pandas as pd
-from bs4 import BeautifulSoup
-from random import randint
-from selenium.webdriver.firefox.webdriver import FirefoxProfile
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError, URLError
-from itertools import cycle
 from header_list import user_agent_list
 from proxies_list import proxies_list_
 from initial_scrapper_function import *

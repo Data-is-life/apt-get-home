@@ -3,25 +3,20 @@
 # Date: 10/01/2018
 
 import re
-import ast
-import sys
-import random
-import string
 import pandas as pd
-from bs4 import BeautifulSoup
-from random import randint
 
 
 def rename_columns(strs_to_replace):
     '''Keeping Dataframe heading formating consistant by converting all values
-    to standardized format that is easy to trace back. If left unformatted, 
+    to standardized format that is easy to trace back. If left unformatted,
     there could be duplicate columns with the same values and it would make it
     far more challenging to search for homes.'''
 
     modified_list = []
 
     for num in strs_to_replace:
-        modified_list.append(num.replace('Redfin Estimate', 'redfin_est').replace(
+        modified_list.append(num.replace('Redfin Estimate', 'redfin_est'
+                                         ).replace(
             'Beds', 'num_bdrs').replace('beds', 'num_bts').replace(
             'Baths', 'num_bts').replace('$', 'price').replace(
             'Built: ', 'yr_blt').lower().replace('__', '_').replace(
@@ -49,11 +44,11 @@ def top_info_parser(soup):
     lat_lon = []
 
     for num in all_top:
-        
+
         # Getting the address
         address_ = num.findAll('span', {'class': 'street-address'})
         top_info_dict['address'] = [num.text for num in address_][0]
-        
+
         # Getting the city
         city_ = num.findAll('span', {'class': 'locality'})
         top_info_dict['city'] = [num.text for num in city_][0]
@@ -74,26 +69,25 @@ def top_info_parser(soup):
         for i in red_est:
             values_.append(i.div.text)
             cats_.append(i.span.text)
-        
+
         # If the Redfin estimate is not available, this is the fall back option.
         price_ = num.findAll('div', {'class': 'info-block price'})
         for i in price_:
             values_.append(i.div.text)
             cats_.append(i.span.text)
-            
 
         # Getting number of bedrooms
         bdrs_ = num.findAll('div', {'data-rf-test-id': 'abp-beds'})
         for i in bdrs_:
             values_.append(i.div.text)
             cats_.append(i.span.text)
-            
+
         # Getting number of bathrooms
         bths_ = num.findAll('div', {'data-rf-test-id': 'abp-baths'})
         for i in bths_:
             values_.append(i.div.text)
             cats_.append(i.span.text)
-        
+
         # Getting size of the home
         sqft_ = num.findAll('div', {'data-rf-test-id': 'abp-sqFt'})
         for i in sqft_:
@@ -108,7 +102,7 @@ def top_info_parser(soup):
                 cats_.append(j.text)
             for k in vals_:
                 values_.append(k.text)
-                
+
         # Getting latitude and longitude of the home
         lat_lon_ = num.findAll('span', {'itemprop': 'geo'})
         for i in lat_lon_:
@@ -124,7 +118,7 @@ def top_info_parser(soup):
     # If they are not avaialble, get rid of them.
     values_ = [num for num in values_ if num != '—']
     cats_ = [num for num in cats_ if num != '—']
-    
+
     # Putting everything in a dictionary, since it removes redundant columns
     info_dict = dict(zip(cats_, values_))
 
@@ -133,7 +127,7 @@ def top_info_parser(soup):
 
     # Getting the home description
     home_description = soup.find('p', {'class': 'font-b1'})
-    if home_description != None:
+    if home_description is not None:
         all_info_dict['description'] = home_description.span.text
     else:
         all_info_dict['description'] = 'N/A'
@@ -245,7 +239,7 @@ def school_parser(soup):
 
 
 def feats_parser(soup):
-    '''All the listed features by the agent/broker inputting the listing 
+    '''All the listed features by the agent/broker inputting the listing
     on the MLS.'''
 
     all_home_feats = soup.findAll('span', {'class': "entryItemContent"})

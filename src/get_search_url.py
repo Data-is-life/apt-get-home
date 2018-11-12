@@ -36,8 +36,8 @@ def gen_last_part_url(customer_df):
     else:
         type_home = ''
 
-    '''Using the Redfin Estimate first to determine the price range of 
-    the search, follwed by last sold price, if the property is sold, or 
+    '''Using the Redfin Estimate first to determine the price range of
+    the search, follwed by last sold price, if the property is sold, or
     listing price if the property is active or pending. '''
 
     if 'red_est' in customer_df.columns:
@@ -93,11 +93,11 @@ def gen_last_part_url(customer_df):
         lot_sqft = int(''.join(num for num in re.findall(r'\d', lot_sqft)))
     elif ('ac' in lot_sqft or 're' in lot_sqft):
         lot_sqft = int(
-            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?', 
+            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?',
                                                     lot_sqft))) * 43560)
     elif (float(lot_sqft) > 0 and float(lot_sqft) < 10):
         lot_sqft = int(
-            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?', 
+            float(''.join(num for num in re.findall(r'\d?\.?\d?\d?',
                                                     lot_sqft))) * 43560)
     elif '—' in lot_sqft:
         lot_sqft = 0
@@ -164,7 +164,7 @@ def gen_zip_url(customer_df):
 def gen_city_url(customer_df):
     '''If not enough properties are found in the same zip code, this is
     an option to run search on the whole city.'''
-    
+
     city = customer_df['city'][1].replace(',', '').replace(' ', '-')
     if city[-1] == '-':
         city = city[:-1]
