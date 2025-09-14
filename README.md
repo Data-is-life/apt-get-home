@@ -1,144 +1,83 @@
 <h1> Apt-Get-Home: Home finder</h1>
 
-<p>Extracting all features from description and property tax records from popular real estate website to fully feature the home from the home link user enters. Then recommending user top two  properties, currently active on the market, that matches the majority of the features based on the features of the home the user entered.</p>
+Apt-Get-Home is a smart home-finder tool that extracts features from property listings and tax records, then recommends the top two active properties that best match the home a user enters.
 
-<h2> The Problem & Solution:</h2>
+---
+### The Problem & Solution:
 
-### The Problem:
-Anyone looking to buy a home has a hard time putting all the features they desire into any website to search for homes and explaining to their agent. That discourages a lot of consumers to continue their search if they don't find what they are looking for after a couple of searches. Also, the websites display all the properties on the market and don't go far enough to understand their consumers' needs.
+**The Problem:**
+Searching for homes online can be frustrating:
+- Websites don’t fully capture buyer preferences.
+- Users struggle to translate “what they want” into search filters.
+- Agents get incomplete information, leading to wasted effort.
 
-### My Solution:
-My model will take features from the home link or address they put in and will give the user only 2 properties that are active on the market and matches the most features of that home. 
+**The Solution:**
+Apt-Get-Home analyzes the features of a given home (via link or address) and returns two active market listings that match the majority of its features.
+---
+### How It Works:
 
-## Creating Model:
+**Data:**
+Scraped from a popular real estate site to provide real-time results.
 
-### Data:
-All the data is scraped from popular real estate website to get real time results.
+**Features Considered:**
 
-### Features:
+* Zip code (primary)
+* City (fallback if no zip results)
+* Home size (sqft)
+* Lot size (for single-family)
+* HOA fees
+* Year built
+* Bedrooms & bathrooms
+* Price (estimate, last sold, or listing price)
 
-The model takes all the information from the link user provides. Currently, it works on the following features:
+**Model:**
+* Current: empirical scoring based on predefined feature weights.
+* Future: data-driven scoring informed by user ratings & feedback.
+---
+### Future Work:
+* Use **NLP** to capture more nuanced property features.
+* Add flexibility in searches (not fail if no exact zip/city match).
+* Integrate with a real estate API (instead of scraping).
+* Build pricing & time-to-sell prediction models.
+* Let users adjust property features for more accurate valuation.
+* Include agent ratings to connect buyers with the best agents.
+---
+### Usage
 
-1. Zip code (primary search parameter)
-2. City (used if no results are found in the same zip code)
-3. Home size (in Sqft)
-4. Lot size (if it is a single family house)
-5. HOA fees (if any)
-6. Year built
-7. Bedroom count
-8. Bathroom count
-9. Price
-    * Use current value of the home from the estimate provided by the real estate website
-    * If no estimate provided, use last sold price
-    * If the home is still active or pending, use the listing price
-
-### Model Selection:
-Currently, it runs on an empirical model of the predefined cost of each feature. The scientific model is in work which will determine the value for each feature based on user rating to the results. 
-
-## Future Work:
-* Use **NLP** to match different features and not limit just based on the basic stats. The model currently starts the search based on the parameters specified with no forgiveness. Add some flexibility to the parameters to have search generate results and not fail, just because it can't find within the same zip code or city. 
-
-* Get access to a real estate data API to get real-time data and not have to worry about scrapping data. 
-
-* Implement pricing feature for any home to get estimated pricing and time it would take for the home to sell based on the specific features of the home. The value of the features in homes will be used based on the area since people living in different parts of the country give positive value to some features that someone from another part of the country will give a negative value.
-
-* This solves the problem of homeowners and buyers looking for the valuation of their current or next home. Currently, they could be confused by all the websites giving different prices. The websites don't explain how they come up with the value and which properties and features they use.
-
-* Also, it will give users options of choosing which features their property has to calculate the precise home value and the amount of time it will take to sell. 
-
-* Add agent rating also to determine which agent would get them the best value for their money.
-
-
-## Usage
-Clone this repository with the command
-
+Clone the repo:
 ```
 git clone git@github.com:Data-is-life/apt-get-home.git
+cd apt-get-home/src
+```
+Run the App
+```
+python app.py
+```
+Or explore in Jupyter:
+```
+jupyter notebook Main_prog.ipynb
 ```
 
-All codes are located in **src** folder. The main file is called **app.py**. If you'd like to run in the Jupyter notebook, run **Main_prog.ipynb** from the **src** folder. 
-
-The repository has the following structure. 
-
-```
-├── Data
-│   ├── active_props_url_list.csv
-│   ├── act_pend_by_city.csv
-│   ├── all_all_info.csv
-│   ├── city_url_search_list.csv
-│   ├── features_review.ods
-│   └── url_ranges.ods
-├── img
-│   ├── Experience.png
-│   ├── From_Bay_Area.png
-│   ├── From_Denver.png
-│   ├── From_Las_Vegas.png
-│   ├── From_Pheonix.png
-│   ├── From_Portland.png
-│   ├── From_Seattle.png
-│   ├── From_Utah.png
-│   ├── Logo.png
-│   ├── RE Companies.png
-│   ├── RE Websites.png
-│   ├── to_Bay_Area.png
-│   ├── to_Denver.png
-│   ├── to_Las_Vegas.png
-│   ├── to_Pheonix.png
-│   ├── to_Portland.png
-│   ├── to_Seattle.png
-│   └── To_Utah.png
-├── Presentation
-│   └── Apt-Get-Home - Mohit Gangwani.pdf
-├── README.md
-└── src
-    ├── app.py
-    ├── get_results.py
-    ├── get_search_url.py
-    ├── header_list.py
-    ├── initial_scrapper_function.py
-    ├── list_df_functions.py
-    ├── Main_prog.ipynb
-    ├── Not in use
-    │   ├── app.ipynb
-    │   ├── old_commands.py
-    │   ├── old_parser.py
-    │   ├── old_scraper.ipynb
-    │   ├── proxie_check.py
-    │   ├── unused_commands.py
-    │   └── url_gen.py
-    ├── parser_functions.py
-    ├── proxies_list.py
-```
-
-## Resources used:
-
-<img src="https://www.python.org/static/community_logos/python-logo-master-v3-TM.png" width="300"></br>
-<img src="https://www.redfin.com/blog/wp-content/uploads/sites/5/2015/01/redfinlogo_blogpreview2.jpg" width="300"></br>
-<img src="https://i.imgur.com/fkPSojf.png" width="300"></br>
-<img src="https://pandas.pydata.org/_static/pandas_logo.png" width="300"></br>
-<img src="https://bids.berkeley.edu/sites/default/files/styles/400x225/public/projects/numpy_project_page.jpg?itok=flrdydei" width="300"></br>
-<img src="https://tettra.co/culture-codes/wp-content/logos/github.png" width="300"></br>
-<img src="https://funthon.files.wordpress.com/2017/05/bs.png?w=1200" width="300">
-
+---
+### 📂 Repository Structure
 
 ```
-Copyright (c) 2019, Mohit Gangwani
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+├── Data/                # Raw data & lookup files
+├── img/                 # Visualizations & logos
+├── Presentation/        # Project presentation slides
+├── src/                 # Main codebase
+│   ├── app.py           # Main app script
+│   ├── Main_prog.ipynb  # Jupyter notebook version
+│   ├── ...              # Helper scripts
+└── README.md
 ```
+---
+### 📚 Built With
+* Python 🐍
+* Pandas
+* NumPy
+* BeautifulSoup
+* Redfin (data source)
+--
+### 📜 License
+MIT License © 2019 Mohit Gangwani
