@@ -12,7 +12,9 @@ Searching for homes online can be frustrating:
 - Agents get incomplete information, leading to wasted effort.
 
 **The Solution:**
+
 Apt-Get-Home analyzes the features of a given home (via link or address) and returns two active market listings that match the majority of its features.
+
 ---
 ### How It Works:
 
