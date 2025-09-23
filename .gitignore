@@ -102,3 +102,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+src/fake_commit_bot.py
