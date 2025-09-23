@@ -22,5 +22,4 @@ def main():
     git_commit_and_push()
 
 if __name__ == "__main__":
-    if random.random() < 0.6:  # Only commit 60% of the time for realism
-        main()
+    main()
